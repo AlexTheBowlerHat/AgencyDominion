@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
+
 
 public class PlayerControl : MonoBehaviour
 {
@@ -13,7 +15,18 @@ public class PlayerControl : MonoBehaviour
     public List<Sprite> southSprites;
     public List<Sprite> southEastSprites;
 
+   // public InputActionMap PlayerActions;
+    public Dictionary<string, string> ActionToMovement;
+    
+
     public float walkSpeed;
+
+    public void MovePlayer(InputAction.CallbackContext context)
+    {
+        Debug.Log(context);
+        Debug.Log("received at PlayerControl");
+        //body.AddForce
+    }
     
     // Start is called before the first frame update
     void Start()
