@@ -16,16 +16,25 @@ public class PlayerControl : MonoBehaviour
     public List<Sprite> southEastSprites;
 
    // public InputActionMap PlayerActions;
-    public Dictionary<string, string> ActionToMovement;
-    
+    //public Dictionary<string, string> ActionToMovement;
 
     public float walkSpeed;
+    [SerializeField] Vector2 direction; 
 
-    public void MovePlayer(InputAction.CallbackContext context)
+    public void MoveInvoked(InputAction.CallbackContext context)
     {
         Debug.Log(context);
-        Debug.Log("received at PlayerControl");
-        //body.AddForce
+        Debug.Log("received at PlayerControl, OOG UGG VERY HAPPY");
+
+        direction = context.ReadValue<Vector2>();
+        Debug.Log(direction);
+
+    }
+
+    public void MovePlayer()
+    {
+        body.AddForce(direction * walkSpeed * Time.fixedDeltaTime, ForceMode2D.Force);
+        //body.velocity = direction * walkSpeed;
     }
     
     // Start is called before the first frame update
@@ -37,6 +46,6 @@ public class PlayerControl : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        MovePlayer();
     }
 }
