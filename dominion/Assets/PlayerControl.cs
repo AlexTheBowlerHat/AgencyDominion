@@ -28,13 +28,14 @@ public class PlayerControl : MonoBehaviour
 
         direction = context.ReadValue<Vector2>();
         Debug.Log(direction);
+        FlipSprite();
 
     }
 
     public void MovePlayer()
     {
-        body.AddForce(direction * walkSpeed * Time.fixedDeltaTime, ForceMode2D.Force);
-        //body.velocity = direction * walkSpeed;
+        //body.AddForce(direction * walkSpeed * Time.fixedDeltaTime, ForceMode2D.Force);
+        body.velocity = direction * walkSpeed * Time.fixedDeltaTime;
     }
     
     // Start is called before the first frame update
@@ -47,5 +48,76 @@ public class PlayerControl : MonoBehaviour
     void Update()
     {
         MovePlayer();
+        SetSprite();
+
+    }
+
+    void FlipSprite()
+    {
+        if (!spriteRenderer.flipX && direction.x < 0 ) //Sprite not flipped and input to left
+        {
+            spriteRenderer.flipX = true;
+        } 
+        else if (spriteRenderer.flipX && direction.x > 0) // Sprite flipped and input heads right
+        {
+            spriteRenderer.flipX = false;
+        }
+    }
+
+    void SetSprite()
+    {
+        List<Sprite> directionSpritesChosen = SelectSpriteList();
+
+        if (directionSpritesChosen != null)
+        {
+            spriteRenderer.sprite = directionSpritesChosen[0];
+        }
+        else
+        {
+            return;
+        }
+
+    }
+
+    List<Sprite> SelectSpriteList()
+    {
+        List<Sprite> selectedSprites = null; //No sprites currently chosen, resets
+
+        /////North Handling
+        if (direction.y > 0) //Going north
+        {
+            if (Mathf.Abs(direction.x) > 0) //Player moving left or right
+            {
+                selectedSprites = northEastSprites; //Only north east as FlipSprite() handles west 
+            }
+            else //Player going solely north
+            {
+                selectedSprites = northSprites;
+            }
+        }
+        
+        ////South Handling
+        else if (direction.y < 0) //Going South
+        {
+                if (Mathf.Abs(direction.x) > 0) //Player moving left or right
+                {
+                    selectedSprites = southEastSprites; //Only south east as FlipSprite handles west
+                }
+                else //Player going solely south
+                {
+                    selectedSprites = southSprites;
+                }
+        }
+
+        else
+        {
+            if (Mathf.Abs(direction.x) > 0) //Player moving left or right
+            {
+                selectedSprites = eastSprites; //Only east as FlipSprite() handles west 
+            }
+        }
+
+        return selectedSprites;
+
     }
 }

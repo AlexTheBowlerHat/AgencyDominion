@@ -251,7 +251,7 @@ MonoBehaviour:
   - {fileID: 8929234261357804970, guid: 46e918b8a9b7eba43bff6252828e7a88, type: 3}
   southEastSprites:
   - {fileID: -4138635201960300739, guid: 46e918b8a9b7eba43bff6252828e7a88, type: 3}
-  walkSpeed: 10
+  walkSpeed: 200
   direction: {x: 0, y: 0}
 --- !u!50 &1209825410
 Rigidbody2D:
