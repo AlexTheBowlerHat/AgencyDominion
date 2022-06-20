@@ -135,6 +135,7 @@ m_ResolvedPackages:
     - 8.0.1
     - 8.0.2
     - 9.0.0-pre.1
+    - 9.0.0-pre.3
     compatible:
     - 7.0.3
     - 7.0.4
@@ -348,6 +349,7 @@ m_ResolvedPackages:
     - 7.0.0
     - 7.0.1
     - 8.0.0-pre.1
+    - 8.0.0-pre.3
     compatible:
     - 6.0.2
     - 6.0.3
@@ -3644,10 +3646,46 @@ m_ResolvedPackages:
   errors: []
   versions:
     all:
+    - 1.0.9-preview.1
+    - 1.0.9-preview.2
+    - 1.0.10-preview
+    - 1.0.11-preview.1
+    - 1.1.0-preview.1
+    - 1.1.0-preview.2
+    - 1.2.0-preview.1
+    - 2.0.1
+    - 2.0.2
+    - 2.1.0
+    - 2.1.1
+    - 2.1.2
+    - 3.0.0
+    - 3.0.1
+    - 4.0.0
+    - 4.0.1
+    - 4.0.2
+    - 4.0.3
+    - 4.0.4
+    - 4.1.0
+    - 4.2.0
+    - 5.0.0-pre.1
+    - 5.0.0-pre.2
+    - 5.0.0
+    - 6.0.0-pre.2
+    - 6.0.0-pre.3
+    - 6.0.0-pre.4
+    - 6.0.0
+    - 6.0.1
     - 6.0.2
+    - 6.0.3
+    - 7.0.0-pre.3
+    - 7.0.0-pre.4
+    - 7.0.0
+    - 8.0.0-pre.1
+    - 8.0.0-pre.2
     compatible:
     - 6.0.2
-    verified: 6.0.2
+    - 6.0.3
+    verified: 6.0.3
   dependencies:
   - name: com.unity.2d.sprite
     version: 1.0.0
@@ -3685,7 +3723,7 @@ m_ResolvedPackages:
     capabilities: 7
   hideInEditor: 1
   isAssetStorePackage: 0
-  datePublishedTicks: 0
+  datePublishedTicks: 637751609720000000
   documentationUrl: 
   hasRepository: 1
   repository:
@@ -3717,10 +3755,31 @@ m_ResolvedPackages:
   errors: []
   versions:
     all:
+    - 1.0.0-preview.1
+    - 1.0.0-preview.4
+    - 2.0.1
+    - 2.0.2
+    - 2.0.3
+    - 2.0.4
+    - 2.0.5
+    - 2.0.6
+    - 2.1.0
+    - 2.1.1
+    - 3.0.0
+    - 3.0.1
+    - 3.0.2
+    - 4.0.0
+    - 4.0.1
+    - 4.0.2
+    - 5.0.0-pre.1
+    - 5.0.0-pre.2
+    - 5.0.0
     - 5.0.1
+    - 5.0.2
     compatible:
     - 5.0.1
-    verified: 5.0.1
+    - 5.0.2
+    verified: 5.0.2
   dependencies: []
   resolvedDependencies: []
   keywords:
@@ -3735,7 +3794,7 @@ m_ResolvedPackages:
     capabilities: 7
   hideInEditor: 1
   isAssetStorePackage: 0
-  datePublishedTicks: 0
+  datePublishedTicks: 637661771910000000
   documentationUrl: 
   hasRepository: 1
   repository:

@@ -24,7 +24,7 @@ public class PlayerControl : MonoBehaviour
     public void MoveInvoked(InputAction.CallbackContext context)
     {
         Debug.Log(context);
-        Debug.Log("received at PlayerControl, OOG UGG VERY HAPPY");
+       // Debug.Log("received at PlayerControl, OOG UGG VERY HAPPY");
 
         direction = context.ReadValue<Vector2>();
         Debug.Log(direction);
@@ -34,14 +34,15 @@ public class PlayerControl : MonoBehaviour
 
     public void MovePlayer()
     {
-        //body.AddForce(direction * walkSpeed * Time.fixedDeltaTime, ForceMode2D.Force);
-        body.velocity = direction * walkSpeed * Time.fixedDeltaTime;
+        //body.AddForce(direction * walkSpeed * Time.fixedDeltaTime, ForceMode2D.Force); //Force method to be used w/ dynamic rb in case
+        body.velocity = direction * walkSpeed * Time.fixedDeltaTime; //Velocity method
+        //body.MovePosition(new Vector2(body.transform.position.x + direction.x , body.transform.position.y + direction.y));
     }
     
     // Start is called before the first frame update
     void Start()
     {
-        
+       
     }
 
     // Update is called once per frame
@@ -51,7 +52,10 @@ public class PlayerControl : MonoBehaviour
         SetSprite();
 
     }
-
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        Debug.Log(gameObject.name + " is touch " + collision.gameObject.name);
+    }
     void FlipSprite()
     {
         if (!spriteRenderer.flipX && direction.x < 0 ) //Sprite not flipped and input to left
