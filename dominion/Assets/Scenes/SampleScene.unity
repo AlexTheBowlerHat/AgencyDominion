@@ -916,6 +916,7 @@ GameObject:
   - component: {fileID: 1209825413}
   - component: {fileID: 1209825415}
   - component: {fileID: 1209825414}
+  - component: {fileID: 1209825416}
   m_Layer: 0
   m_Name: Character
   m_TagString: Untagged
@@ -1173,6 +1174,22 @@ PolygonCollider2D:
       - {x: 0.3125, y: 0}
       - {x: 0.09375, y: 0}
       - {x: 0.09375, y: 0.3125}
+--- !u!114 &1209825416
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1209825408}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8da439dfcaee29b45aaf59528a2bd1ba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  parented: {fileID: 0}
+  parentedTag: 
+  startingHealth: 100
+  _healthPoints: 100
 --- !u!1 &1940093741
 GameObject:
   m_ObjectHideFlags: 0
