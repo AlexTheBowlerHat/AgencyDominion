@@ -19,7 +19,32 @@ public class PlayerControl : MonoBehaviour
     //public Dictionary<string, string> ActionToMovement;
 
     public float walkSpeed;
-    [SerializeField] Vector2 direction; 
+    [SerializeField] Vector2 direction;
+    [SerializeField] Vector2 lookDirection;
+
+    //Variables for shooting
+    public Vector2 mousePos;
+    public Camera mainCam;
+
+    void Start()
+    {
+        mainCam = Camera.main;
+        mainCam.enabled = true;
+    }
+
+    // Update is called once per frame
+    void FixedUpdate()
+    {
+        MovePlayer();
+    }
+
+    void Update()
+    {
+        SetSprite();
+        FlipSprite();
+    }
+
+    //Movement Methods
 
     public void MoveInvoked(InputAction.CallbackContext context)
     {
@@ -29,18 +54,13 @@ public class PlayerControl : MonoBehaviour
         direction = context.ReadValue<Vector2>();
         //Debug.Log(direction);
        
-        
-
-        FlipSprite();
-        SetSprite();
+        //FlipSprite();
+        //SetSprite();
         //while input is down do move player
 
     }
 
-    public void Pressed()
-    {
 
-    }
     public void MovePlayer()
     {
         //body.AddForce(direction * walkSpeed * Time.fixedDeltaTime, ForceMode2D.Force); //Force method to be used w/ dynamic rb in case
@@ -48,23 +68,31 @@ public class PlayerControl : MonoBehaviour
         //body.MovePosition(new Vector2(body.transform.position.x + direction.x , body.transform.position.y + direction.y));
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        //SetSprite();
-        MovePlayer();
-    }
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
         Debug.Log(gameObject.name + " is touch " + collision.gameObject.name);
     }
+
+    //Shooting Methods============================================================
+    public void Fire()
+    {
+        mousePos = mainCam.ScreenToWorldPoint(Mouse.current.position.ReadValue());
+        lookDirection = (mousePos - body.position).normalized;
+        Debug.Log(lookDirection);
+        //something something minus character transform normalise then force
+
+    }
+
+
+    //Sprite Methods-----------------------------------------------------------------------------
     void FlipSprite()
     {
-        if (!spriteRenderer.flipX && direction.x < 0 ) //Sprite not flipped and input to left
+        if (!spriteRenderer.flipX && lookDirection.x < 0 ) //Sprite not flipped and input to left
         {
             spriteRenderer.flipX = true;
         } 
-        else if (spriteRenderer.flipX && direction.x > 0) // Sprite flipped and input heads right
+        else if (spriteRenderer.flipX && lookDirection.x > 0) // Sprite flipped and input heads right
         {
             spriteRenderer.flipX = false;
         }
@@ -90,9 +118,9 @@ public class PlayerControl : MonoBehaviour
         List<Sprite> selectedSprites = null; //No sprites currently chosen, resets
 
         /////North Handling
-        if (direction.y > 0) //Going north
+        if (lookDirection.y > 0) //Going north
         {
-            if (Mathf.Abs(direction.x) > 0) //Player moving left or right
+            if (Mathf.Abs(lookDirection.x) > 0) //Player moving left or right
             {
                 selectedSprites = northEastSprites; //Only north east as FlipSprite() handles west 
             }
@@ -103,9 +131,9 @@ public class PlayerControl : MonoBehaviour
         }
         
         ////South Handling
-        else if (direction.y < 0) //Going South
+        else if (lookDirection.y < 0) //Going South
         {
-                if (Mathf.Abs(direction.x) > 0) //Player moving left or right
+                if (Mathf.Abs(lookDirection.x) > 0) //Player moving left or right
                 {
                     selectedSprites = southEastSprites; //Only south east as FlipSprite handles west
                 }
@@ -117,7 +145,7 @@ public class PlayerControl : MonoBehaviour
 
         else
         {
-            if (Mathf.Abs(direction.x) > 0) //Player moving left or right
+            if (Mathf.Abs(lookDirection.x) > 0) //Player moving left or right
             {
                 selectedSprites = eastSprites; //Only east as FlipSprite() handles west 
             }
