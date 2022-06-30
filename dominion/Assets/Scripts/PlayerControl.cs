@@ -40,6 +40,7 @@ public class PlayerControl : MonoBehaviour
 
     void Update()
     {
+        Fire();
         SetSprite();
         FlipSprite();
     }
@@ -79,7 +80,7 @@ public class PlayerControl : MonoBehaviour
     {
         mousePos = mainCam.ScreenToWorldPoint(Mouse.current.position.ReadValue());
         lookDirection = (mousePos - body.position).normalized;
-        Debug.Log(lookDirection);
+        //Debug.Log(lookDirection);
         //something something minus character transform normalise then force
 
     }
