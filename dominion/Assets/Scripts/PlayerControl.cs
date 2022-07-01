@@ -6,6 +6,8 @@ using UnityEngine.InputSystem;
 
 public class PlayerControl : MonoBehaviour
 {
+    const float screenDivideConst = 3;
+
     public SpriteRenderer spriteRenderer;
     public Rigidbody2D body;
     //Sprite lists don't include west due to use of spriterender.flipx
@@ -21,6 +23,8 @@ public class PlayerControl : MonoBehaviour
     public float walkSpeed;
     [SerializeField] Vector2 direction;
     [SerializeField] Vector2 lookDirection;
+    [SerializeField] float lookAngle;
+    [SerializeField] Vector2 lookDirectionUnnormalized;
 
     //Variables for shooting
     public Vector2 mousePos;
@@ -80,7 +84,11 @@ public class PlayerControl : MonoBehaviour
     {
         mousePos = mainCam.ScreenToWorldPoint(Mouse.current.position.ReadValue());
         lookDirection = (mousePos - body.position).normalized;
-        //Debug.Log(lookDirection);
+        lookDirectionUnnormalized = mousePos - body.position;
+        //lookAngle = Mathf.Atan2(lookDirectionUnnormalized.y, lookDirectionUnnormalized.x) * Mathf.Rad2Deg;
+
+        Debug.Log(lookDirection);
+        Debug.Log(lookAngle);
         //something something minus character transform normalise then force
 
     }
@@ -117,6 +125,31 @@ public class PlayerControl : MonoBehaviour
     List<Sprite> SelectSpriteList()
     {
         List<Sprite> selectedSprites = null; //No sprites currently chosen, resets
+
+        //Left or right
+        //Right case
+        if (mousePos.x >= 0)
+        {
+            if(mousePos.y < mousePos.x/screenDivideConst && mousePos.y > mousePos.x/-screenDivideConst) //Player facing horizontal
+            {
+                Debug.Log("ooooog ahh ");
+                selectedSprites = eastSprites;
+            }
+            else //Check if nw or sw
+            {
+                if (mousePos.y > 0)
+                {
+
+                }
+            }
+
+        }
+        //Left case
+        else
+        {
+
+        }
+
 
         /////North Handling
         if (lookDirection.y > 0) //Going north
