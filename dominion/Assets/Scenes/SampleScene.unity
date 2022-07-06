@@ -134,6 +134,7 @@ GameObject:
   - component: {fileID: 519420032}
   - component: {fileID: 519420031}
   - component: {fileID: 519420029}
+  - component: {fileID: 519420033}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -207,6 +208,26 @@ Transform:
   m_Father: {fileID: 1209825412}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &519420033
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 519420028}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6a160d838ff8b4b4693ac20007e008c7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_AssetsPPU: 100
+  m_RefResolutionX: 320
+  m_RefResolutionY: 180
+  m_UpscaleRT: 1
+  m_PixelSnapping: 0
+  m_CropFrameX: 0
+  m_CropFrameY: 0
+  m_StretchFill: 0
 --- !u!1 &593408285
 GameObject:
   m_ObjectHideFlags: 0
@@ -1101,6 +1122,7 @@ GameObject:
   - component: {fileID: 1209825416}
   - component: {fileID: 1209825415}
   - component: {fileID: 1209825414}
+  - component: {fileID: 1209825417}
   m_Layer: 0
   m_Name: Character
   m_TagString: Player
@@ -1122,21 +1144,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spriteRenderer: {fileID: 1209825411}
   body: {fileID: 1209825410}
-  northSprites:
-  - {fileID: -2442548626146251763, guid: 46e918b8a9b7eba43bff6252828e7a88, type: 3}
-  northEastSprites:
-  - {fileID: 6420953893146038154, guid: 46e918b8a9b7eba43bff6252828e7a88, type: 3}
-  eastSprites:
-  - {fileID: -936600355023276456, guid: 46e918b8a9b7eba43bff6252828e7a88, type: 3}
-  southSprites:
-  - {fileID: 8929234261357804970, guid: 46e918b8a9b7eba43bff6252828e7a88, type: 3}
-  southEastSprites:
-  - {fileID: -4138635201960300739, guid: 46e918b8a9b7eba43bff6252828e7a88, type: 3}
+  animator: {fileID: 1209825417}
   walkSpeed: 200
   direction: {x: 0, y: 0}
   lookDirection: {x: 0, y: 0}
+  lookAngle: 0
+  lookDirectionUnnormalized: {x: 0, y: 0}
   mousePos: {x: 0, y: 0}
-  mainCam: {fileID: 0}
+  mainCam: {fileID: 519420031}
 --- !u!50 &1209825410
 Rigidbody2D:
   serializedVersion: 4
@@ -1397,6 +1412,26 @@ MonoBehaviour:
   parentedTag: Player
   startingHealth: 100
   _healthPoints: 100
+--- !u!95 &1209825417
+Animator:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1209825408}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 8f0a84fe45f2ec64c915e6254a142eed, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &1940093741
 GameObject:
   m_ObjectHideFlags: 0

@@ -6,19 +6,30 @@ using UnityEngine.InputSystem;
 
 public class PlayerControl : MonoBehaviour
 {
-    const float screenDivideConst = 3;
-
     public SpriteRenderer spriteRenderer;
     public Rigidbody2D body;
     //Sprite lists don't include west due to use of spriterender.flipx
+    /*
     public List<Sprite> northSprites;
     public List<Sprite> northEastSprites;
     public List<Sprite> eastSprites;
     public List<Sprite> southSprites;
     public List<Sprite> southEastSprites;
+    */
 
-   // public InputActionMap PlayerActions;
+    // public InputActionMap PlayerActions;
     //public Dictionary<string, string> ActionToMovement;
+
+    //const float screenDivideConst = 3;
+    public Animator animator;
+    /*
+    string currentState;
+    const string playerIdle = "Player_Idle";
+    const string playerWalkLeft = "Player_Walk_Left";
+    const string playerWalkRight = "Player_Walk_Right";
+    const string playerWalkUp = "Player_Walk_Up";
+    const string playerWalkDown = "Player_Walk_Down";
+    */
 
     public float walkSpeed;
     [SerializeField] Vector2 direction;
@@ -45,15 +56,17 @@ public class PlayerControl : MonoBehaviour
     void Update()
     {
         Fire();
-        SetSprite();
-        FlipSprite();
+        SendAnimate();
+        //SetSprite();
+        //FlipSprite();
+        //ChangeAnimationState(playerIdle);
     }
 
-    //Movement Methods
+    //Movement Methods==================================
 
     public void MoveInvoked(InputAction.CallbackContext context)
     {
-        Debug.Log(context);
+        Debug.Log("CONTEXT is: " + context.ToString());
        // Debug.Log("received at PlayerControl, OOG UGG VERY HAPPY");
 
         direction = context.ReadValue<Vector2>();
@@ -68,33 +81,64 @@ public class PlayerControl : MonoBehaviour
 
     public void MovePlayer()
     {
-        //body.AddForce(direction * walkSpeed * Time.fixedDeltaTime, ForceMode2D.Force); //Force method to be used w/ dynamic rb in case
-        body.velocity = direction * walkSpeed * Time.fixedDeltaTime; //Velocity method
-        //body.MovePosition(new Vector2(body.transform.position.x + direction.x , body.transform.position.y + direction.y));
+        if (direction != Vector2.zero)
+        {
+            body.velocity = direction * walkSpeed * Time.fixedDeltaTime; //Velocity method
+
+            //body.AddForce(direction * walkSpeed * Time.fixedDeltaTime, ForceMode2D.Force); //Force method to be used w/ dynamic rb in case
+            //body.MovePosition(new Vector2(body.transform.position.x + direction.x , body.transform.position.y + direction.y));
+        }
+
     }
 
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        Debug.Log(gameObject.name + " is touch " + collision.gameObject.name);
+        Debug.Log(gameObject.name + " HAS COLLIDED WITH " + collision.gameObject.name);
     }
 
     //Shooting Methods============================================================
     public void Fire()
     {
-        mousePos = mainCam.ScreenToWorldPoint(Mouse.current.position.ReadValue());
+        mousePos = Mouse.current.position.ReadValue(); //mainCam.ScreenToWorldPoint
         lookDirection = (mousePos - body.position).normalized;
         lookDirectionUnnormalized = mousePos - body.position;
-        //lookAngle = Mathf.Atan2(lookDirectionUnnormalized.y, lookDirectionUnnormalized.x) * Mathf.Rad2Deg;
+        lookAngle = Mathf.Atan2(lookDirectionUnnormalized.y, lookDirectionUnnormalized.x) * Mathf.Rad2Deg;
 
-        Debug.Log(lookDirection);
         Debug.Log(lookAngle);
+        Debug.Log("LOOKDIRECTION IS: " + lookDirection.ToString());
+        Debug.Log("MOUSEPOSITION" + mousePos.ToString());
         //something something minus character transform normalise then force
 
     }
 
+    //Animation Methods======================================================
 
-    //Sprite Methods-----------------------------------------------------------------------------
+    private void SendAnimate()
+    {
+        animator.SetFloat("LookX", lookDirection.x);
+        animator.SetFloat("LookY", lookDirection.y);
+
+    }
+
+    /*
+    void ChangeAnimationState(string newstate)
+    {
+        //Checks if next animation is already playing
+        if (currentState != newstate)
+        {
+            //Plays new animation
+            animator.Play(newstate);
+
+            //Updates current animation
+            currentState = newstate;
+        }
+        else return;
+        
+    }
+
+
+    //Sprite Methods=======================================================
     void FlipSprite()
     {
         if (!spriteRenderer.flipX && lookDirection.x < 0 ) //Sprite not flipped and input to left
@@ -106,7 +150,7 @@ public class PlayerControl : MonoBehaviour
             spriteRenderer.flipX = false;
         }
     }
-
+    
     void SetSprite()
     {
         List<Sprite> directionSpritesChosen = SelectSpriteList();
@@ -126,11 +170,22 @@ public class PlayerControl : MonoBehaviour
     {
         List<Sprite> selectedSprites = null; //No sprites currently chosen, resets
 
+        switch (lookAngle)
+        {
+            case float n when lookAngle > 0:
+                Debug.Log("AHHHHH");
+                break;
+
+            default:
+                break;
+        }
+
         //Left or right
+        /*
         //Right case
         if (mousePos.x >= 0)
         {
-            if(mousePos.y < mousePos.x/screenDivideConst && mousePos.y > mousePos.x/-screenDivideConst) //Player facing horizontal
+            if(mousePos.y < mousePos.x/screenDivideConst && mousePos.y > mousePos.x/-screenDivideConst) //Player facing right
             {
                 Debug.Log("ooooog ahh ");
                 selectedSprites = eastSprites;
@@ -184,8 +239,8 @@ public class PlayerControl : MonoBehaviour
                 selectedSprites = eastSprites; //Only east as FlipSprite() handles west 
             }
         }
-
-        return selectedSprites;
-
-    }
+        */
+        //return selectedSprites;
+       
+    //}
 }
