@@ -1144,8 +1144,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spriteRenderer: {fileID: 1209825411}
   body: {fileID: 1209825410}
-  animator: {fileID: 1209825417}
-  walkSpeed: 200
+  northSprites:
+  - {fileID: -2442548626146251763, guid: 46e918b8a9b7eba43bff6252828e7a88, type: 3}
+  northEastSprites:
+  - {fileID: 6420953893146038154, guid: 46e918b8a9b7eba43bff6252828e7a88, type: 3}
+  eastSprites:
+  - {fileID: -936600355023276456, guid: 46e918b8a9b7eba43bff6252828e7a88, type: 3}
+  southSprites:
+  - {fileID: 8929234261357804970, guid: 46e918b8a9b7eba43bff6252828e7a88, type: 3}
+  southEastSprites:
+  - {fileID: -4138635201960300739, guid: 46e918b8a9b7eba43bff6252828e7a88, type: 3}
+  walkSpeed: 100
   direction: {x: 0, y: 0}
   lookDirection: {x: 0, y: 0}
   lookAngle: 0

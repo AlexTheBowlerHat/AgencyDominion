@@ -9,19 +9,19 @@ public class PlayerControl : MonoBehaviour
     public SpriteRenderer spriteRenderer;
     public Rigidbody2D body;
     //Sprite lists don't include west due to use of spriterender.flipx
-    /*
+   
     public List<Sprite> northSprites;
     public List<Sprite> northEastSprites;
     public List<Sprite> eastSprites;
     public List<Sprite> southSprites;
     public List<Sprite> southEastSprites;
-    */
+    
 
     // public InputActionMap PlayerActions;
     //public Dictionary<string, string> ActionToMovement;
 
-    //const float screenDivideConst = 3;
-    public Animator animator;
+    const float screenDivideConst = 3;
+    //public Animator animator;
     /*
     string currentState;
     const string playerIdle = "Player_Idle";
@@ -56,9 +56,9 @@ public class PlayerControl : MonoBehaviour
     void Update()
     {
         Fire();
-        SendAnimate();
-        //SetSprite();
-        //FlipSprite();
+        //SendAnimate();
+        SetSprite();
+        FlipSprite();
         //ChangeAnimationState(playerIdle);
     }
 
@@ -66,7 +66,7 @@ public class PlayerControl : MonoBehaviour
 
     public void MoveInvoked(InputAction.CallbackContext context)
     {
-        Debug.Log("CONTEXT is: " + context.ToString());
+        //Debug.Log("CONTEXT is: " + context.ToString());
        // Debug.Log("received at PlayerControl, OOG UGG VERY HAPPY");
 
         direction = context.ReadValue<Vector2>();
@@ -100,13 +100,13 @@ public class PlayerControl : MonoBehaviour
     //Shooting Methods============================================================
     public void Fire()
     {
-        mousePos = Mouse.current.position.ReadValue(); //mainCam.ScreenToWorldPoint
+        mousePos = mainCam.ScreenToWorldPoint(Mouse.current.position.ReadValue()) - transform.position; //mainCam.ScreenToWorldPoint
         lookDirection = (mousePos - body.position).normalized;
         lookDirectionUnnormalized = mousePos - body.position;
         lookAngle = Mathf.Atan2(lookDirectionUnnormalized.y, lookDirectionUnnormalized.x) * Mathf.Rad2Deg;
 
-        Debug.Log(lookAngle);
-        Debug.Log("LOOKDIRECTION IS: " + lookDirection.ToString());
+        //Debug.Log(lookAngle);
+        //Debug.Log("LOOKDIRECTION IS: " + lookDirection.ToString());
         Debug.Log("MOUSEPOSITION" + mousePos.ToString());
         //something something minus character transform normalise then force
 
@@ -114,13 +114,13 @@ public class PlayerControl : MonoBehaviour
 
     //Animation Methods======================================================
 
-    private void SendAnimate()
+    /*private void SendAnimate()
     {
         animator.SetFloat("LookX", lookDirection.x);
         animator.SetFloat("LookY", lookDirection.y);
 
     }
-
+    */
     /*
     void ChangeAnimationState(string newstate)
     {
@@ -136,7 +136,7 @@ public class PlayerControl : MonoBehaviour
         else return;
         
     }
-
+    */
 
     //Sprite Methods=======================================================
     void FlipSprite()
@@ -170,22 +170,27 @@ public class PlayerControl : MonoBehaviour
     {
         List<Sprite> selectedSprites = null; //No sprites currently chosen, resets
 
-        switch (lookAngle)
+        /*switch (lookAngle)
         {
-            case float n when lookAngle > 0:
+            case float _ when lookAngle > 0:
                 Debug.Log("AHHHHH");
+                break;
+
+            case float _ when lookAngle < 0:
+
                 break;
 
             default:
                 break;
+
         }
 
         //Left or right
-        /*
+
         //Right case
         if (mousePos.x >= 0)
         {
-            if(mousePos.y < mousePos.x/screenDivideConst && mousePos.y > mousePos.x/-screenDivideConst) //Player facing right
+            if (mousePos.y < mousePos.x / screenDivideConst && mousePos.y > mousePos.x / -screenDivideConst) //Player facing right
             {
                 Debug.Log("ooooog ahh ");
                 selectedSprites = eastSprites;
@@ -204,7 +209,7 @@ public class PlayerControl : MonoBehaviour
         {
 
         }
-
+        */
 
         /////North Handling
         if (lookDirection.y > 0) //Going north
@@ -218,18 +223,18 @@ public class PlayerControl : MonoBehaviour
                 selectedSprites = northSprites;
             }
         }
-        
+
         ////South Handling
         else if (lookDirection.y < 0) //Going South
         {
-                if (Mathf.Abs(lookDirection.x) > 0) //Player moving left or right
-                {
-                    selectedSprites = southEastSprites; //Only south east as FlipSprite handles west
-                }
-                else //Player going solely south
-                {
-                    selectedSprites = southSprites;
-                }
+            if (Mathf.Abs(lookDirection.x) > 0) //Player moving left or right
+            {
+                selectedSprites = southEastSprites; //Only south east as FlipSprite handles west
+            }
+            else //Player going solely south
+            {
+                selectedSprites = southSprites;
+            }
         }
 
         else
@@ -239,8 +244,8 @@ public class PlayerControl : MonoBehaviour
                 selectedSprites = eastSprites; //Only east as FlipSprite() handles west 
             }
         }
-        */
-        //return selectedSprites;
-       
-    //}
+
+        return selectedSprites;
+
+    }
 }
