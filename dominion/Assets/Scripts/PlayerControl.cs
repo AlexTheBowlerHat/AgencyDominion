@@ -20,7 +20,7 @@ public class PlayerControl : MonoBehaviour
     // public InputActionMap PlayerActions;
     //public Dictionary<string, string> ActionToMovement;
 
-    const float screenDivideConst = 2;
+    const float screenDivideConst = 3;
     //public Animator animator;
     /*
     string currentState;
@@ -39,6 +39,8 @@ public class PlayerControl : MonoBehaviour
 
     //Variables for shooting
     public Vector2 mousePos;
+    public float mouseX;
+    public float mouseY;
     public Camera mainCam;
 
     void Start()
@@ -66,10 +68,10 @@ public class PlayerControl : MonoBehaviour
 
     public void MoveInvoked(InputAction.CallbackContext context)
     {
-        //Debug.Log("CONTEXT is: " + context.ToString());
-       // Debug.Log("received at PlayerControl, OOG UGG VERY HAPPY");
-
         direction = context.ReadValue<Vector2>();
+        //Debug.Log("CONTEXT is: " + context.ToString());
+        // Debug.Log("received at PlayerControl, OOG UGG VERY HAPPY");
+
         //Debug.Log(direction);
        
         //FlipSprite();
@@ -100,8 +102,13 @@ public class PlayerControl : MonoBehaviour
     //Shooting Methods============================================================
     public void Fire()
     {
-        mousePos = Mouse.current.position.ReadValue();//.normalized; //- transform.position; //mainCam.ScreenToWorldPoint
+        mousePos = mainCam.ScreenToWorldPoint(Mouse.current.position.ReadValue()); //Takes mouse position from the camera and reads it //.normalized; //- transform.position; //mainCam.ScreenToWorldPoint
+
         lookDirection = (mousePos - body.position).normalized;
+        mouseX = lookDirection.x; //- Screen.width / 2f;
+        mouseY = lookDirection.y; //- Screen.height / 2f;
+
+
         lookDirectionUnnormalized = mousePos - body.position;
         lookAngle = Mathf.Atan2(lookDirectionUnnormalized.y, lookDirectionUnnormalized.x) * Mathf.Rad2Deg;
 
@@ -141,11 +148,11 @@ public class PlayerControl : MonoBehaviour
     //Sprite Methods=======================================================
     void FlipSprite()
     {
-        if (!spriteRenderer.flipX && mousePos.x < 0 ) //Sprite not flipped and input to left
+        if (!spriteRenderer.flipX && mouseX < 0 ) //Sprite not flipped and input to left
         {
             spriteRenderer.flipX = true;
         } 
-        else if (spriteRenderer.flipX && mousePos.x > 0) // Sprite flipped and input heads right
+        else if (spriteRenderer.flipX && mouseX > 0) // Sprite flipped and input heads right
         {
             spriteRenderer.flipX = false;
         }
@@ -172,53 +179,53 @@ public class PlayerControl : MonoBehaviour
 
         //Forgive me for what you're about to witness
 
-        switch (mousePos)
+        switch (mousePos) //7.5 -231
         {
             //NORTH (x,y > y/k and y/-k | also y > 0)
-            case Vector2 _ when mousePos.y > 0 && mousePos.x > mousePos.y / screenDivideConst && mousePos.y > mousePos.y / screenDivideConst 
-            && mousePos.x > mousePos.y / -screenDivideConst && mousePos.y > mousePos.y / -screenDivideConst:
+            case Vector2 _ when mouseY > 0 && mouseX > mouseY / screenDivideConst && mouseY > mouseY / screenDivideConst 
+            && mouseX > mouseY / -screenDivideConst && mouseY > mouseY / -screenDivideConst:
                 Debug.Log("NORTH");
                 break;
 
             //SOUTH (x,y < y/k and y/-k | also y < 0)
-            case Vector2 _ when mousePos.y < 0 && mousePos.x < mousePos.y / screenDivideConst && mousePos.y < mousePos.y / screenDivideConst
-            && mousePos.x < mousePos.y / -screenDivideConst && mousePos.y < mousePos.y / -screenDivideConst:
+            case Vector2 _ when mouseY < 0 && mouseX < mouseY / screenDivideConst && mouseY < mouseY / screenDivideConst
+            && mouseX < mouseY / -screenDivideConst && mouseY < mouseY / -screenDivideConst:
                 Debug.Log("SOUTH");
                 break;
 
             //EAST (x,y < x/k and > x/-k | also x > 0)
-            case Vector2 _ when mousePos.x > 0 && mousePos.x < mousePos.x / screenDivideConst && mousePos.y < mousePos.x / screenDivideConst
-            && mousePos.x > mousePos.x / -screenDivideConst && mousePos.y > mousePos.x / -screenDivideConst:
+            case Vector2 _ when mouseX > 0 && mouseX < mouseX / screenDivideConst && mouseY < mouseX / screenDivideConst
+            && mouseX > mouseX / -screenDivideConst && mouseY > mouseX / -screenDivideConst:
                 Debug.Log("EAST");
                 break;
 
             //WEST (x,y < x/-k and > x/k | also x < 0)
-            case Vector2 _ when mousePos.x < 0 && mousePos.x < mousePos.x / -screenDivideConst && mousePos.y < mousePos.x / -screenDivideConst
-            && mousePos.x > mousePos.x / screenDivideConst && mousePos.y > mousePos.x / screenDivideConst:
+            case Vector2 _ when mouseX < 0 && mouseX < mouseX / -screenDivideConst && mouseY < mouseX / -screenDivideConst
+            && mouseX > mouseX / screenDivideConst && mouseY > mouseX / screenDivideConst:
                 Debug.Log("WEST");
                 break;
 
             //NORTHWEST (x,y < y/-k and > x/-k | also x < 0 and y > 0
-            case Vector2 _ when mousePos.x < 0 && mousePos.y > 0 && mousePos.x < mousePos.y / -screenDivideConst && mousePos.y < mousePos.y / -screenDivideConst
-            && mousePos.x > mousePos.x / -screenDivideConst && mousePos.y > mousePos.x / -screenDivideConst:
+            case Vector2 _ when mouseX < 0 && mouseY > 0 && mouseX < mouseY / -screenDivideConst && mouseY < mouseY / -screenDivideConst
+            && mouseX > mouseX / -screenDivideConst && mouseY > mouseX / -screenDivideConst:
                 Debug.Log("NORTHWEST");
                 break;
 
             //NORTHEAST (x,y < y/k and > x/k | also x > 0 and y > 0
-            case Vector2 _ when mousePos.x > 0 && mousePos.y > 0 && mousePos.x < mousePos.y / screenDivideConst && mousePos.y < mousePos.y / screenDivideConst
-            && mousePos.x > mousePos.x / screenDivideConst && mousePos.y > mousePos.x / screenDivideConst:
+            case Vector2 _ when mouseX > 0 && mouseY > 0 && mouseX < mouseY / screenDivideConst && mouseY < mouseY / screenDivideConst
+            && mouseX > mouseX / screenDivideConst && mouseY > mouseX / screenDivideConst:
                 Debug.Log("NORTHEAST");
                 break;
 
             //SOUTHWEST (x,y > y/k and < x/k | also x < 0 and y < 0
-            case Vector2 _ when mousePos.x < 0 && mousePos.y < 0 && mousePos.x > mousePos.y / screenDivideConst && mousePos.y > mousePos.y / screenDivideConst
-            && mousePos.x < mousePos.x / screenDivideConst && mousePos.y < mousePos.x / screenDivideConst:
+            case Vector2 _ when mouseX < 0 && mouseY < 0 && mouseX > mouseY / screenDivideConst && mouseY > mouseY / screenDivideConst
+            && mouseX < mouseX / screenDivideConst && mouseY < mouseX / screenDivideConst:
                 Debug.Log("SOUTHWEST");
                 break;
 
             //SOUTHEAST (x,y > y/-k and < x/-k | also x > 0 and y < 0
-            case Vector2 _ when mousePos.x > 0 && mousePos.y < 0 && mousePos.x > mousePos.y / -screenDivideConst && mousePos.y > mousePos.y / -screenDivideConst
-            && mousePos.x < mousePos.x / -screenDivideConst && mousePos.y < mousePos.x / -screenDivideConst:
+            case Vector2 _ when mouseX > 0 && mouseY < 0 && mouseX > mouseY / -screenDivideConst && mouseY > mouseY / -screenDivideConst
+            && mouseX < mouseX / -screenDivideConst && mouseY < mouseX / -screenDivideConst:
                 Debug.Log("SOUTHEAST");
                 break;
 
