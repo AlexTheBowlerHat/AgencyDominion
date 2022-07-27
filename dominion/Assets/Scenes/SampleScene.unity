@@ -177,7 +177,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 2
+  orthographic size: 3
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -1154,12 +1154,14 @@ MonoBehaviour:
   - {fileID: 8929234261357804970, guid: 46e918b8a9b7eba43bff6252828e7a88, type: 3}
   southEastSprites:
   - {fileID: -4138635201960300739, guid: 46e918b8a9b7eba43bff6252828e7a88, type: 3}
-  walkSpeed: 100
+  walkSpeed: 200
   direction: {x: 0, y: 0}
   lookDirection: {x: 0, y: 0}
   lookAngle: 0
   lookDirectionUnnormalized: {x: 0, y: 0}
   mousePos: {x: 0, y: 0}
+  mouseX: 0
+  mouseY: 0
   mainCam: {fileID: 519420031}
 --- !u!50 &1209825410
 Rigidbody2D:

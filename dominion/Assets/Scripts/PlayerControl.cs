@@ -58,9 +58,9 @@ public class PlayerControl : MonoBehaviour
     void Update()
     {
         Fire();
-        //SendAnimate();
         SetSprite();
         FlipSprite();
+        //SendAnimate();
         //ChangeAnimationState(playerIdle);
     }
 
@@ -102,7 +102,7 @@ public class PlayerControl : MonoBehaviour
     //Shooting Methods============================================================
     public void Fire()
     {
-        mousePos = mainCam.ScreenToWorldPoint(Mouse.current.position.ReadValue()); //Takes mouse position from the camera and reads it //.normalized; //- transform.position; //mainCam.ScreenToWorldPoint
+        mousePos = mainCam.ScreenToWorldPoint(Mouse.current.position.ReadValue()); //Takes mouse position from the camera and reads it //.normalized; //- transform.position; //mainCam.ScreenToWorldPoint()
 
         lookDirection = (mousePos - body.position).normalized;
         mouseX = lookDirection.x; //- Screen.width / 2f;
@@ -178,88 +178,64 @@ public class PlayerControl : MonoBehaviour
         List<Sprite> selectedSprites = null; //No sprites currently chosen, resets
 
         //Forgive me for what you're about to witness
-
-        switch (mousePos) //7.5 -231
+        //Checks where the mouse is on the screen in terms of two semi circles, one 0 to 180, another -0 to -180
+        switch (lookAngle) 
         {
-            //NORTH (x,y > y/k and y/-k | also y > 0)
-            case Vector2 _ when mouseY > 0 && mouseX > mouseY / screenDivideConst && mouseY > mouseY / screenDivideConst 
-            && mouseX > mouseY / -screenDivideConst && mouseY > mouseY / -screenDivideConst:
+            //NORTH 
+            case float _ when 75f < lookAngle && lookAngle < 105f:
                 Debug.Log("NORTH");
+                selectedSprites = northSprites;
                 break;
 
-            //SOUTH (x,y < y/k and y/-k | also y < 0)
-            case Vector2 _ when mouseY < 0 && mouseX < mouseY / screenDivideConst && mouseY < mouseY / screenDivideConst
-            && mouseX < mouseY / -screenDivideConst && mouseY < mouseY / -screenDivideConst:
+            //SOUTH 
+            case float _ when -75f > lookAngle && lookAngle > -105f:
                 Debug.Log("SOUTH");
+                selectedSprites = southSprites;
                 break;
 
-            //EAST (x,y < x/k and > x/-k | also x > 0)
-            case Vector2 _ when mouseX > 0 && mouseX < mouseX / screenDivideConst && mouseY < mouseX / screenDivideConst
-            && mouseX > mouseX / -screenDivideConst && mouseY > mouseX / -screenDivideConst:
-                Debug.Log("EAST");
-                break;
-
-            //WEST (x,y < x/-k and > x/k | also x < 0)
-            case Vector2 _ when mouseX < 0 && mouseX < mouseX / -screenDivideConst && mouseY < mouseX / -screenDivideConst
-            && mouseX > mouseX / screenDivideConst && mouseY > mouseX / screenDivideConst:
+            //Could tehnically put these together west & east
+            //WEST 
+            case float _ when 165f < lookAngle || lookAngle < -165f: 
                 Debug.Log("WEST");
+                selectedSprites = eastSprites;
                 break;
 
-            //NORTHWEST (x,y < y/-k and > x/-k | also x < 0 and y > 0
-            case Vector2 _ when mouseX < 0 && mouseY > 0 && mouseX < mouseY / -screenDivideConst && mouseY < mouseY / -screenDivideConst
-            && mouseX > mouseX / -screenDivideConst && mouseY > mouseX / -screenDivideConst:
-                Debug.Log("NORTHWEST");
+            //EAST 
+            case float _ when 15f > lookAngle && lookAngle > -15f:
+                Debug.Log("EAST");
+                selectedSprites = eastSprites;
                 break;
 
-            //NORTHEAST (x,y < y/k and > x/k | also x > 0 and y > 0
-            case Vector2 _ when mouseX > 0 && mouseY > 0 && mouseX < mouseY / screenDivideConst && mouseY < mouseY / screenDivideConst
-            && mouseX > mouseX / screenDivideConst && mouseY > mouseX / screenDivideConst:
-                Debug.Log("NORTHEAST");
+            //NORTH WEST 
+            case float _ when 105f < lookAngle && lookAngle < 165f:
+                Debug.Log("NORTH WEST");
+                selectedSprites = northEastSprites;
                 break;
 
-            //SOUTHWEST (x,y > y/k and < x/k | also x < 0 and y < 0
-            case Vector2 _ when mouseX < 0 && mouseY < 0 && mouseX > mouseY / screenDivideConst && mouseY > mouseY / screenDivideConst
-            && mouseX < mouseX / screenDivideConst && mouseY < mouseX / screenDivideConst:
-                Debug.Log("SOUTHWEST");
+            //NORTH EAST
+            case float _ when 15f < lookAngle && lookAngle < 75f:
+                Debug.Log("NORTH EAST");
+                selectedSprites = northEastSprites;
                 break;
 
-            //SOUTHEAST (x,y > y/-k and < x/-k | also x > 0 and y < 0
-            case Vector2 _ when mouseX > 0 && mouseY < 0 && mouseX > mouseY / -screenDivideConst && mouseY > mouseY / -screenDivideConst
-            && mouseX < mouseX / -screenDivideConst && mouseY < mouseX / -screenDivideConst:
-                Debug.Log("SOUTHEAST");
+            //SOUTH WEST
+            case float _ when -165f < lookAngle && lookAngle < -105f:
+                Debug.Log("SOUTH WEST");
+                selectedSprites = southEastSprites;
+                break;
+
+            //SOUTH EAST 
+            case float _ when -75f < lookAngle && lookAngle < -15f:
+                Debug.Log("SOUTH EAST");
+                selectedSprites = southEastSprites;
                 break;
 
             default:
-                Debug.LogWarning("Oh no the player look direction");
+                Debug.LogWarning("Error: Look angle switch failure | lines 182 to 227");
                 break;
 
         }
-        /*
-        //Left or right
-
-        //Right case
-        if (mousePos.x >= 0)
-        {
-            if (mousePos.y < mousePos.x / screenDivideConst && mousePos.y > mousePos.x / -screenDivideConst) //Player facing right
-            {
-                Debug.Log("ooooog ahh ");
-                selectedSprites = eastSprites;
-            }
-            else //Check if nw or sw
-            {
-                if (mousePos.y > 0)
-                {
-
-                }
-            }
-
-        }
-        //Left case
-        else
-        {
-
-        }
-        */
+        return selectedSprites;
         /*
         /////North Handling
         if (lookDirection.y > 0) //Going north
@@ -295,7 +271,6 @@ public class PlayerControl : MonoBehaviour
             }
         }
         */
-        return selectedSprites;
 
     }
 }
