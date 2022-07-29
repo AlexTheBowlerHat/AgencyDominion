@@ -20,7 +20,7 @@ public class PlayerControl : MonoBehaviour
     // public InputActionMap PlayerActions;
     //public Dictionary<string, string> ActionToMovement;
 
-    const float screenDivideConst = 3;
+    //const float screenDivideConst = 3;
     //public Animator animator;
     /*
     string currentState;
@@ -33,8 +33,10 @@ public class PlayerControl : MonoBehaviour
 
     public float walkSpeed;
     [SerializeField] Vector2 direction;
+ 
     [SerializeField] Vector2 lookDirection;
     [SerializeField] float lookAngle;
+    [SerializeField] float lookAngle2;
     [SerializeField] Vector2 lookDirectionUnnormalized;
 
     //Variables for shooting
@@ -57,7 +59,7 @@ public class PlayerControl : MonoBehaviour
 
     void Update()
     {
-        Fire();
+        RetreiveMouseInfo();
         SetSprite();
         FlipSprite();
         //SendAnimate();
@@ -83,13 +85,13 @@ public class PlayerControl : MonoBehaviour
 
     public void MovePlayer()
     {
+
         if (direction != Vector2.zero)
         {
             body.velocity = direction * walkSpeed * Time.fixedDeltaTime; //Velocity method
-
-            //body.AddForce(direction * walkSpeed * Time.fixedDeltaTime, ForceMode2D.Force); //Force method to be used w/ dynamic rb in case
-            //body.MovePosition(new Vector2(body.transform.position.x + direction.x , body.transform.position.y + direction.y));
         }
+        //body.AddForce(direction * walkSpeed * Time.fixedDeltaTime, ForceMode2D.Force); //Force method to be used w/ dynamic rb in case
+        //body.MovePosition(new Vector2(body.transform.position.x + direction.x , body.transform.position.y + direction.y));
 
     }
 
@@ -100,21 +102,38 @@ public class PlayerControl : MonoBehaviour
     }
 
     //Shooting Methods============================================================
+
+    public void RetreiveMouseInfo()
+    {
+        mousePos = mainCam.ScreenToWorldPoint(Mouse.current.position.ReadValue()); //Takes mouse position from the camera and reads it
+        lookDirection = (mousePos - body.position).normalized;
+        lookDirectionUnnormalized = mousePos - body.position;   //Sets lookdirectionunormalized to a vector that points from the player object to the mouse
+
+        lookAngle = Mathf.Atan2(lookDirectionUnnormalized.y, lookDirectionUnnormalized.x) * Mathf.Rad2Deg; //Returns float that is an angle between x axis and the look direction vector
+        //Debug.Log("MOUSEPOSITION" + mousePos.ToString());
+        Debug.Log("ANGLE W/O -90F: " + lookAngle.ToString());
+      
+
+
+    }
     public void Fire()
     {
-        mousePos = mainCam.ScreenToWorldPoint(Mouse.current.position.ReadValue()); //Takes mouse position from the camera and reads it //.normalized; //- transform.position; //mainCam.ScreenToWorldPoint()
+        RetreiveMouseInfo();
+        //Weapon.Fire();
 
-        lookDirection = (mousePos - body.position).normalized;
-        mouseX = lookDirection.x; //- Screen.width / 2f;
-        mouseY = lookDirection.y; //- Screen.height / 2f;
+        //mousePos = mainCam.ScreenToWorldPoint(Mouse.current.position.ReadValue()); //Takes mouse position from the camera and reads it //.normalized; //- transform.position; //mainCam.ScreenToWorldPoint()
+
+        //lookDirection = (mousePos - body.position).normalized;
+        //mouseX = lookDirection.x; //- Screen.width / 2f;
+        //mouseY = lookDirection.y; //- Screen.height / 2f;
 
 
-        lookDirectionUnnormalized = mousePos - body.position;
-        lookAngle = Mathf.Atan2(lookDirectionUnnormalized.y, lookDirectionUnnormalized.x) * Mathf.Rad2Deg;
+        //lookDirectionUnnormalized = mousePos - body.position;
+        //lookAngle = Mathf.Atan2(lookDirectionUnnormalized.y, lookDirectionUnnormalized.x) * Mathf.Rad2Deg;
 
         //Debug.Log(lookAngle);
         //Debug.Log("LOOKDIRECTION IS: " + lookDirection.ToString());
-        Debug.Log("MOUSEPOSITION" + mousePos.ToString());
+        //Debug.Log("MOUSEPOSITION" + mousePos.ToString());
         //something something minus character transform normalise then force
 
     }
@@ -148,11 +167,11 @@ public class PlayerControl : MonoBehaviour
     //Sprite Methods=======================================================
     void FlipSprite()
     {
-        if (!spriteRenderer.flipX && mouseX < 0 ) //Sprite not flipped and input to left
+        if (!spriteRenderer.flipX && lookDirection.x < 0) //Sprite not flipped and input to left
         {
             spriteRenderer.flipX = true;
-        } 
-        else if (spriteRenderer.flipX && mouseX > 0) // Sprite flipped and input heads right
+        }
+        else if (spriteRenderer.flipX && lookDirection.x > 0) // Sprite flipped and input heads right
         {
             spriteRenderer.flipX = false;
         }
