@@ -20,7 +20,7 @@ public class PlayerControl : MonoBehaviour
     
 
     // public InputActionMap PlayerActions;
-    //public Dictionary<string, string> ActionToMovement;
+    //private Dictionary<string, string> ActionToMovement = new Dictionary<string,Vector2>();
 
     //const float screenDivideConst = 3;
     //public Animator animator;
@@ -38,7 +38,6 @@ public class PlayerControl : MonoBehaviour
  
     [SerializeField] Vector2 lookDirection;
     [SerializeField] float lookAngle;
-    [SerializeField] float lookAngleLocked;
     [SerializeField] Vector2 lookDirectionUnnormalized;
 
     //Variables for shooting
