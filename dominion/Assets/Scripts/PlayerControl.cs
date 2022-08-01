@@ -8,8 +8,10 @@ public class PlayerControl : MonoBehaviour
 {
     public SpriteRenderer spriteRenderer;
     public Rigidbody2D body;
+    public Weapon weapon;
+    public Transform weaponTransform;
     //Sprite lists don't include west due to use of spriterender.flipx
-   
+
     public List<Sprite> northSprites;
     public List<Sprite> northEastSprites;
     public List<Sprite> eastSprites;
@@ -36,7 +38,7 @@ public class PlayerControl : MonoBehaviour
  
     [SerializeField] Vector2 lookDirection;
     [SerializeField] float lookAngle;
-    [SerializeField] float lookAngle2;
+    [SerializeField] float lookAngleLocked;
     [SerializeField] Vector2 lookDirectionUnnormalized;
 
     //Variables for shooting
@@ -103,23 +105,28 @@ public class PlayerControl : MonoBehaviour
 
     //Shooting Methods============================================================
 
-    public void RetreiveMouseInfo()
+    public Vector2 RetreiveMouseInfo()
     {
         mousePos = mainCam.ScreenToWorldPoint(Mouse.current.position.ReadValue()); //Takes mouse position from the camera and reads it
         lookDirection = (mousePos - body.position).normalized;
         lookDirectionUnnormalized = mousePos - body.position;   //Sets lookdirectionunormalized to a vector that points from the player object to the mouse
 
         lookAngle = Mathf.Atan2(lookDirectionUnnormalized.y, lookDirectionUnnormalized.x) * Mathf.Rad2Deg; //Returns float that is an angle between x axis and the look direction vector
+        Quaternion rotation = Quaternion.Euler(0, 0, lookAngle - 90f);
+        weaponTransform.rotation = rotation;
+
         //Debug.Log("MOUSEPOSITION" + mousePos.ToString());
         Debug.Log("ANGLE W/O -90F: " + lookAngle.ToString());
-      
-
+        return lookDirection;
 
     }
-    public void Fire()
+    public void Fire(InputAction.CallbackContext context)
     {
-        RetreiveMouseInfo();
-        //Weapon.Fire();
+        
+            Vector2 lookVector = RetreiveMouseInfo();
+            weapon.Fire(lookVector);
+        
+
 
         //mousePos = mainCam.ScreenToWorldPoint(Mouse.current.position.ReadValue()); //Takes mouse position from the camera and reads it //.normalized; //- transform.position; //mainCam.ScreenToWorldPoint()
 

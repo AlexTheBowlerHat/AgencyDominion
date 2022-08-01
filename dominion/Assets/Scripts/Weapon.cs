@@ -6,12 +6,13 @@ public class Weapon : MonoBehaviour
 {
     public GameObject projectilePrefab;
     public Transform firePoint;
-    public float projectileForce;
+    [SerializeField] private float projectileForce = 20f;
+   
     // Start is called before the first frame update
    
-    public void Fire()
+    public void Fire(Vector2 lookVector)
     {
         GameObject projectile = Instantiate(projectilePrefab, firePoint.position, firePoint.rotation);
-
+        projectile.GetComponent<Rigidbody2D>().AddForce(lookVector * projectileForce, ForceMode2D.Impulse);
     }
 }
