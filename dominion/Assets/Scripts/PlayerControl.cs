@@ -45,6 +45,9 @@ public class PlayerControl : MonoBehaviour
     public float mouseX;
     public float mouseY;
     public Camera mainCam;
+    bool hasFired = false;
+
+
 
     void Start()
     {
@@ -119,11 +122,27 @@ public class PlayerControl : MonoBehaviour
         return lookDirection;
 
     }
-    public void Fire(InputAction.CallbackContext context)
+    IEnumerator Shoot()
     {
-        
+
+        if (!hasFired)
+        {
+            hasFired = true;
             Vector2 lookVector = RetreiveMouseInfo();
             weapon.Fire(lookVector);
+            yield return new WaitForSeconds(0.2f);
+            hasFired = false;
+
+        }
+        yield break;
+
+    }
+        
+       
+    public void Fire(InputAction.CallbackContext context)
+    {
+        StartCoroutine(Shoot());
+       
         
 
 
