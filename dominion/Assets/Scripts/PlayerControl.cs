@@ -17,6 +17,7 @@ public class PlayerControl : MonoBehaviour
     public List<Sprite> eastSprites;
     public List<Sprite> southSprites;
     public List<Sprite> southEastSprites;
+
     
 
     // public InputActionMap PlayerActions;
@@ -209,6 +210,7 @@ public class PlayerControl : MonoBehaviour
         if (directionSpritesChosen != null) //Chooses sprite to show if there are no sprites
         {
             spriteRenderer.sprite = directionSpritesChosen[0];
+            gameObject.GetComponent<CompositeCollider2D>().GenerateGeometry();
         }
         else
         {
