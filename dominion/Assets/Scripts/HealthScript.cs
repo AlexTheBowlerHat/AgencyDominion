@@ -31,10 +31,10 @@ public class HealthScript : MonoBehaviour
         parentedTag = parented.tag;
     }
     //private string objectTagToString = parented.transform.gameObject.tag.ToString();
-    void Eliminate()
+    public void Eliminate()
     {
         objectTagToString = parentedTag.ToString();
-        
+       // _healthPoints -= 10f;
     }
        
 }
