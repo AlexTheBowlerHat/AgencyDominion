@@ -5,6 +5,7 @@ using UnityEngine;
 public class AlternateFire : MonoBehaviour
 {
     // Start is called before the first frame update
+    /*
     float timeAfterLastShot = 0f;
     const float fireCooldown = 0.2f;
 
@@ -26,4 +27,5 @@ public class AlternateFire : MonoBehaviour
             Debug.Log("UGG");
         }
     }
+    */
 }

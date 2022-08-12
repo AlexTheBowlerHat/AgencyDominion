@@ -103,7 +103,7 @@ public class PlayerControl : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        Debug.Log(gameObject.name + " HAS COLLIDED WITH " + collision.gameObject.name);
+        //Debug.Log(gameObject.name + " HAS COLLIDED WITH " + collision.gameObject.name);
     }
 
     //Shooting Methods============================================================
@@ -119,7 +119,7 @@ public class PlayerControl : MonoBehaviour
         weaponTransform.rotation = rotation;
 
         //Debug.Log("MOUSEPOSITION" + mousePos.ToString());
-        Debug.Log("ANGLE W/O -90F: " + lookAngle.ToString());
+        //Debug.Log("ANGLE W/O -90F: " + lookAngle.ToString());
         return lookDirection;
 
     }
@@ -229,50 +229,50 @@ public class PlayerControl : MonoBehaviour
         {
             //NORTH 
             case float _ when 67.5f < lookAngle && lookAngle < 112.5f:
-                Debug.Log("NORTH");
+                //Debug.Log("NORTH");
                 selectedSprites = northSprites;
                 break;
 
             //SOUTH 
             case float _ when -67.5f > lookAngle && lookAngle > -112.5f:
-                Debug.Log("SOUTH");
+                //Debug.Log("SOUTH");
                 selectedSprites = southSprites;
                 break;
 
             //Could tehnically put these together west & east
             //WEST 
             case float _ when 157.5f < lookAngle || lookAngle < -157.5f: 
-                Debug.Log("WEST");
+                //Debug.Log("WEST");
                 selectedSprites = eastSprites;
                 break;
 
             //EAST 
             case float _ when 22.5f > lookAngle && lookAngle > -22.5f:
-                Debug.Log("EAST");
+                //Debug.Log("EAST");
                 selectedSprites = eastSprites;
                 break;
 
             //NORTH WEST 
             case float _ when 112.5f < lookAngle && lookAngle < 157.5f:
-                Debug.Log("NORTH WEST");
+                //Debug.Log("NORTH WEST");
                 selectedSprites = northEastSprites;
                 break;
 
             //NORTH EAST
             case float _ when 22.5f < lookAngle && lookAngle < 67.5f:
-                Debug.Log("NORTH EAST");
+                //Debug.Log("NORTH EAST");
                 selectedSprites = northEastSprites;
                 break;
 
             //SOUTH WEST
             case float _ when -157.5f < lookAngle && lookAngle < -112.5f:
-                Debug.Log("SOUTH WEST");
+                //Debug.Log("SOUTH WEST");
                 selectedSprites = southEastSprites;
                 break;
 
             //SOUTH EAST 
             case float _ when -67.5f < lookAngle && lookAngle < -22.5f:
-                Debug.Log("SOUTH EAST");
+                //Debug.Log("SOUTH EAST");
                 selectedSprites = southEastSprites;
                 break;
 
