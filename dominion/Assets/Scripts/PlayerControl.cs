@@ -39,6 +39,7 @@ public class PlayerControl : MonoBehaviour
  
     [SerializeField] Vector2 lookDirection;
     [SerializeField] float lookAngle;
+    [SerializeField] float threeSixtyLookAngle;
     [SerializeField] Vector2 lookDirectionUnnormalized;
 
     //Variables for shooting
@@ -115,11 +116,13 @@ public class PlayerControl : MonoBehaviour
         lookDirectionUnnormalized = mousePos - body.position;   //Sets lookdirectionunormalized to a vector that points from the player object to the mouse
 
         lookAngle = Mathf.Atan2(lookDirectionUnnormalized.y, lookDirectionUnnormalized.x) * Mathf.Rad2Deg; //Returns float that is an angle between x axis and the look direction vector
+        threeSixtyLookAngle = (lookAngle + 360) % 360; //Converts the atan look angle which has negatives into 360 degrees, Taken from Stackoverflow User Liam George Betsworth
         Quaternion rotation = Quaternion.Euler(0, 0, lookAngle - 90f);
         weaponTransform.rotation = rotation;
 
         //Debug.Log("MOUSEPOSITION" + mousePos.ToString());
         //Debug.Log("ANGLE W/O -90F: " + lookAngle.ToString());
+        Debug.Log(threeSixtyLookAngle);
         return lookDirection;
 
     }
@@ -130,7 +133,7 @@ public class PlayerControl : MonoBehaviour
         {
             hasFired = true;
             Vector2 lookVector = RetreiveMouseInfo();
-            weapon.Fire(lookVector);
+            weapon.Fire(lookVector, gameObject.tag);
             yield return new WaitForSeconds(0.2f);
             hasFired = false;
 
@@ -225,53 +228,53 @@ public class PlayerControl : MonoBehaviour
 
         //Forgive me for what you're about to witness
         //Checks where the mouse is on the screen in terms of two semi circles, one 0 to 180, another -0 to -180
-        switch (lookAngle) 
+        switch (threeSixtyLookAngle) 
         {
             //NORTH 
-            case float _ when 67.5f < lookAngle && lookAngle < 112.5f:
+            case float _ when 67.5f < threeSixtyLookAngle && threeSixtyLookAngle < 112.5f:
                 //Debug.Log("NORTH");
                 selectedSprites = northSprites;
                 break;
 
             //SOUTH 
-            case float _ when -67.5f > lookAngle && lookAngle > -112.5f:
+            case float _ when 292.5f > threeSixtyLookAngle && threeSixtyLookAngle > 247.5f:
                 //Debug.Log("SOUTH");
                 selectedSprites = southSprites;
                 break;
 
             //Could tehnically put these together west & east
             //WEST 
-            case float _ when 157.5f < lookAngle || lookAngle < -157.5f: 
+            case float _ when 157.5f < threeSixtyLookAngle && threeSixtyLookAngle < 202.5f: 
                 //Debug.Log("WEST");
                 selectedSprites = eastSprites;
                 break;
 
             //EAST 
-            case float _ when 22.5f > lookAngle && lookAngle > -22.5f:
+            case float _ when 22.5f > threeSixtyLookAngle || threeSixtyLookAngle > 337.5f:
                 //Debug.Log("EAST");
                 selectedSprites = eastSprites;
                 break;
 
             //NORTH WEST 
-            case float _ when 112.5f < lookAngle && lookAngle < 157.5f:
+            case float _ when 112.5f < threeSixtyLookAngle && threeSixtyLookAngle < 157.5f:
                 //Debug.Log("NORTH WEST");
                 selectedSprites = northEastSprites;
                 break;
 
             //NORTH EAST
-            case float _ when 22.5f < lookAngle && lookAngle < 67.5f:
+            case float _ when 22.5f < threeSixtyLookAngle && threeSixtyLookAngle < 67.5f:
                 //Debug.Log("NORTH EAST");
                 selectedSprites = northEastSprites;
                 break;
 
             //SOUTH WEST
-            case float _ when -157.5f < lookAngle && lookAngle < -112.5f:
+            case float _ when 202.5f < threeSixtyLookAngle && threeSixtyLookAngle < 247.5f:
                 //Debug.Log("SOUTH WEST");
                 selectedSprites = southEastSprites;
                 break;
 
             //SOUTH EAST 
-            case float _ when -67.5f < lookAngle && lookAngle < -22.5f:
+            case float _ when 292.5f < threeSixtyLookAngle && threeSixtyLookAngle < 337.5f:
                 //Debug.Log("SOUTH EAST");
                 selectedSprites = southEastSprites;
                 break;

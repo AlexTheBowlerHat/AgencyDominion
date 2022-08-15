@@ -10,9 +10,10 @@ public class Weapon : MonoBehaviour
    
     // Start is called before the first frame update
    
-    public void Fire(Vector2 lookVector)
+    public void Fire(Vector2 lookVector, string firedTag)
     {
         GameObject projectile = Instantiate(projectilePrefab, firePoint.position, firePoint.rotation);
+        projectile.GetComponent<ProjectileBehavior>().SetFired(firedTag);
         projectile.GetComponent<Rigidbody2D>().AddForce(lookVector * projectileForce, ForceMode2D.Impulse);
     }
 }
