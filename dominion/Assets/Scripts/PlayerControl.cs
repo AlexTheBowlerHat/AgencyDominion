@@ -10,33 +10,19 @@ public class PlayerControl : MonoBehaviour
     public Rigidbody2D body;
     public Weapon weapon;
     public Transform weaponTransform;
-    //Sprite lists don't include west due to use of spriterender.flipx
 
+    //Sprite lists, doesn't include west due to use of spriterender.flipx
     public List<Sprite> northSprites;
     public List<Sprite> northEastSprites;
     public List<Sprite> eastSprites;
     public List<Sprite> southSprites;
     public List<Sprite> southEastSprites;
 
-    
-
-    // public InputActionMap PlayerActions;
-    //private Dictionary<string, string> ActionToMovement = new Dictionary<string,Vector2>();
-
-    //const float screenDivideConst = 3;
-    //public Animator animator;
-    /*
-    string currentState;
-    const string playerIdle = "Player_Idle";
-    const string playerWalkLeft = "Player_Walk_Left";
-    const string playerWalkRight = "Player_Walk_Right";
-    const string playerWalkUp = "Player_Walk_Up";
-    const string playerWalkDown = "Player_Walk_Down";
-    */
-
+    //Variables for movement
     public float walkSpeed;
     [SerializeField] Vector2 direction;
- 
+
+    //Variables for look direction
     [SerializeField] Vector2 lookDirection;
     [SerializeField] float lookAngle;
     [SerializeField] float threeSixtyLookAngle;
@@ -49,86 +35,69 @@ public class PlayerControl : MonoBehaviour
     public Camera mainCam;
     bool hasFired = false;
 
-
-
     void Start()
     {
+        //Sets up the camera and gets a reference
         mainCam = Camera.main;
-        mainCam.enabled = true;
+        mainCam.enabled = true; 
     }
 
-    // Update is called once per frame
+    //FixedUpdate is called every 0.02s
     void FixedUpdate()
     {
         MovePlayer();
     }
 
+    //Update is called once per frame
     void Update()
     {
         RetreiveMouseInfo();
         SetSprite();
         FlipSprite();
-        //SendAnimate();
-        //ChangeAnimationState(playerIdle);
     }
 
-    //Movement Methods==================================
-
+    //Movement Methods
+    //Whenever a movement button is pressed, create a reference to the movement direction the player is going
     public void MoveInvoked(InputAction.CallbackContext context)
     {
         direction = context.ReadValue<Vector2>();
-        //Debug.Log("CONTEXT is: " + context.ToString());
-        // Debug.Log("received at PlayerControl, OOG UGG VERY HAPPY");
-
-        //Debug.Log(direction);
-       
-        //FlipSprite();
-        //SetSprite();
-        //while input is down do move player
-
     }
-
-
     public void MovePlayer()
     {
-
         if (direction != Vector2.zero)
         {
             body.velocity = direction * walkSpeed * Time.fixedDeltaTime; //Velocity method
         }
-        //body.AddForce(direction * walkSpeed * Time.fixedDeltaTime, ForceMode2D.Force); //Force method to be used w/ dynamic rb in case
-        //body.MovePosition(new Vector2(body.transform.position.x + direction.x , body.transform.position.y + direction.y));
-
-    }
-
-
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        //Debug.Log(gameObject.name + " HAS COLLIDED WITH " + collision.gameObject.name);
     }
 
     //Shooting Methods============================================================
-
     public Vector2 RetreiveMouseInfo()
     {
-        mousePos = mainCam.ScreenToWorldPoint(Mouse.current.position.ReadValue()); //Takes mouse position from the camera and reads it
+        //Takes mouse position from the camera 
+        mousePos = mainCam.ScreenToWorldPoint(Mouse.current.position.ReadValue()); 
+        //Vectors that point from the player to the mouse 
         lookDirection = (mousePos - body.position).normalized;
-        lookDirectionUnnormalized = mousePos - body.position;   //Sets lookdirectionunormalized to a vector that points from the player object to the mouse
+        lookDirectionUnnormalized = mousePos - body.position;
 
-        lookAngle = Mathf.Atan2(lookDirectionUnnormalized.y, lookDirectionUnnormalized.x) * Mathf.Rad2Deg; //Returns float that is an angle between x axis and the look direction vector
-        threeSixtyLookAngle = (lookAngle + 360) % 360; //Converts the atan look angle which has negatives into 360 degrees, Taken from Stackoverflow User Liam George Betsworth
+        //Returns float that is an angle between x axis and the look direction of the player
+        lookAngle = Mathf.Atan2(lookDirectionUnnormalized.y, lookDirectionUnnormalized.x) * Mathf.Rad2Deg;
+
+        //Converts the atan look angle which has negatives into 360 degrees, Taken from Stackoverflow User Liam George Betsworth
+        threeSixtyLookAngle = (lookAngle + 360) % 360; 
+
+        //Sets the weapon depending on the look angle
         Quaternion rotation = Quaternion.Euler(0, 0, lookAngle - 90f);
         weaponTransform.rotation = rotation;
 
         //Debug.Log("MOUSEPOSITION" + mousePos.ToString());
         //Debug.Log("ANGLE W/O -90F: " + lookAngle.ToString());
-        Debug.Log(threeSixtyLookAngle);
+        //Debug.Log(threeSixtyLookAngle);
         return lookDirection;
-
     }
+
+    //Coroutine that fires bullet with a cooldown
     IEnumerator Shoot()
     {
-
         if (!hasFired)
         {
             hasFired = true;
@@ -136,76 +105,31 @@ public class PlayerControl : MonoBehaviour
             weapon.Fire(lookVector, gameObject.tag);
             yield return new WaitForSeconds(0.2f);
             hasFired = false;
-
         }
         yield break;
-
     }
-        
-       
+
+    //Invoked on F press, starts a coroutine to shoot
     public void Fire(InputAction.CallbackContext context)
     {
         StartCoroutine(Shoot());
-       
-        
-
-
-        //mousePos = mainCam.ScreenToWorldPoint(Mouse.current.position.ReadValue()); //Takes mouse position from the camera and reads it //.normalized; //- transform.position; //mainCam.ScreenToWorldPoint()
-
-        //lookDirection = (mousePos - body.position).normalized;
-        //mouseX = lookDirection.x; //- Screen.width / 2f;
-        //mouseY = lookDirection.y; //- Screen.height / 2f;
-
-
-        //lookDirectionUnnormalized = mousePos - body.position;
-        //lookAngle = Mathf.Atan2(lookDirectionUnnormalized.y, lookDirectionUnnormalized.x) * Mathf.Rad2Deg;
-
-        //Debug.Log(lookAngle);
-        //Debug.Log("LOOKDIRECTION IS: " + lookDirection.ToString());
-        //Debug.Log("MOUSEPOSITION" + mousePos.ToString());
-        //something something minus character transform normalise then force
-
     }
-
-    //Animation Methods======================================================
-
-    /*private void SendAnimate()
-    {
-        animator.SetFloat("LookX", lookDirection.x);
-        animator.SetFloat("LookY", lookDirection.y);
-
-    }
-    */
-    /*
-    void ChangeAnimationState(string newstate)
-    {
-        //Checks if next animation is already playing
-        if (currentState != newstate)
-        {
-            //Plays new animation
-            animator.Play(newstate);
-
-            //Updates current animation
-            currentState = newstate;
-        }
-        else return;
-        
-    }
-    */
 
     //Sprite Methods=======================================================
+    //Flips player sprite depending on whether mouse is to left or right of the player
     void FlipSprite()
     {
-        if (!spriteRenderer.flipX && lookDirection.x < 0) //Sprite not flipped and input to left
+        if (!spriteRenderer.flipX && lookDirection.x < 0) 
         {
             spriteRenderer.flipX = true;
         }
-        else if (spriteRenderer.flipX && lookDirection.x > 0) // Sprite flipped and input heads right
+        else if (spriteRenderer.flipX && lookDirection.x > 0) 
         {
             spriteRenderer.flipX = false;
         }
     }
-    
+
+    //Sets the sprite of the player to whichever direction they're 'looking' in
     void SetSprite()
     {
         List<Sprite> directionSpritesChosen = SelectSpriteList();
@@ -219,15 +143,15 @@ public class PlayerControl : MonoBehaviour
         {
             return;
         }
-
     }
 
+    //Selects a sprite to change to based on player's mouse 
     List<Sprite> SelectSpriteList()
     {
-        List<Sprite> selectedSprites = null; //No sprites currently chosen, resets
+        //Resets list before selecting a new one
+        List<Sprite> selectedSprites = null; 
 
-        //Forgive me for what you're about to witness
-        //Checks where the mouse is on the screen in terms of two semi circles, one 0 to 180, another -0 to -180
+        //Switch checks where the mouse is on the screen in terms of an angle to the x axis
         switch (threeSixtyLookAngle) 
         {
             //NORTH 
@@ -285,41 +209,5 @@ public class PlayerControl : MonoBehaviour
 
         }
         return selectedSprites;
-        /*
-        /////North Handling
-        if (lookDirection.y > 0) //Going north
-        {
-            if (Mathf.Abs(lookDirection.x) > 0) //Player moving left or right
-            {
-                selectedSprites = northEastSprites; //Only north east as FlipSprite() handles west 
-            }
-            else //Player going solely north
-            {
-                selectedSprites = northSprites;
-            }
-        }
-
-        ////South Handling
-        else if (lookDirection.y < 0) //Going South
-        {
-            if (Mathf.Abs(lookDirection.x) > 0) //Player moving left or right
-            {
-                selectedSprites = southEastSprites; //Only south east as FlipSprite handles west
-            }
-            else //Player going solely south
-            {
-                selectedSprites = southSprites;
-            }
-        }
-
-        else
-        {
-            if (Mathf.Abs(lookDirection.x) > 0) //Player moving left or right
-            {
-                selectedSprites = eastSprites; //Only east as FlipSprite() handles west 
-            }
-        }
-        */
-
     }
 }
