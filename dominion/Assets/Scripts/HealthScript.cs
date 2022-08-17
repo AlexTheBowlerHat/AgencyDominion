@@ -27,10 +27,9 @@ public class HealthScript : MonoBehaviour
     void Start()
     {
         healthPoints = startingHealth;
-        parented = transform.parent.gameObject;
+        parented = gameObject;
         parentedTag = parented.tag;
     }
-    //private string objectTagToString = parented.transform.gameObject.tag.ToString();
     public void Eliminate()
     {
         objectTagToString = parentedTag.ToString();

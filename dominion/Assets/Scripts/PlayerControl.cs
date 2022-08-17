@@ -30,12 +30,10 @@ public class PlayerControl : MonoBehaviour
 
     //Variables for shooting
     public Vector2 mousePos;
-    public float mouseX;
-    public float mouseY;
     public Camera mainCam;
     bool hasFired = false;
     public Transform handleTransform;
-    public Vector2[] weaponPositions = {new Vector2(-0.5f,0),new Vector2(0.5f,0)};
+    public Vector3[] weaponPositions = {new Vector3(-0.5f,0,0),new Vector3(0.5f,0,0)};
 
     void Start()
     {
@@ -57,6 +55,7 @@ public class PlayerControl : MonoBehaviour
         RetreiveMouseInfo();
         SetSprite();
         FlipSprite();
+        FlipWeapon();
     }
 
     //Movement Methods
@@ -127,12 +126,23 @@ public class PlayerControl : MonoBehaviour
         if (!spriteRenderer.flipX && lookDirection.x < 0) 
         {
             spriteRenderer.flipX = true;
-            handleTransform.position = weaponPositions[0];
         }
         else if (spriteRenderer.flipX && lookDirection.x > 0) 
         {
             spriteRenderer.flipX = false;
-            handleTransform.position = weaponPositions[1];
+        }
+    }
+    void FlipWeapon()
+    {
+        if (lookDirection.x < -0.5) 
+        {
+            Debug.Log("LEFT CHANGE ON" + lookDirection.ToString());
+            handleTransform.localPosition = weaponPositions[0];
+        }
+        else if (lookDirection.x > 0.5) 
+        {
+            Debug.Log("RIGHT CHANGE ON"+ lookDirection.ToString());
+            handleTransform.localPosition = weaponPositions[1];
         }
     }
 
