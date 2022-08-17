@@ -8,8 +8,7 @@ public class Weapon : MonoBehaviour
     public Transform firePoint;
     [SerializeField] private float projectileForce = 20f;
    
-    // Start is called before the first frame update
-   
+   //Creates a projectile and fires it from the weapon, also passes the tag of object that fired it
     public void Fire(Vector2 lookVector, string firedTag)
     {
         GameObject projectile = Instantiate(projectilePrefab, firePoint.position, firePoint.rotation);

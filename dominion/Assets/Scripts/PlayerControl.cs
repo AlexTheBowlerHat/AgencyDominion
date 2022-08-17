@@ -34,12 +34,15 @@ public class PlayerControl : MonoBehaviour
     public float mouseY;
     public Camera mainCam;
     bool hasFired = false;
+    public Transform handleTransform;
+    public Vector2[] weaponPositions = {new Vector2(-0.5f,0),new Vector2(0.5f,0)};
 
     void Start()
     {
         //Sets up the camera and gets a reference
         mainCam = Camera.main;
-        mainCam.enabled = true; 
+        mainCam.enabled = true;
+        handleTransform = transform.GetChild(0);
     }
 
     //FixedUpdate is called every 0.02s
@@ -71,10 +74,12 @@ public class PlayerControl : MonoBehaviour
     }
 
     //Shooting Methods============================================================
+    //Gets key information for shooting and wepaon direction
     public Vector2 RetreiveMouseInfo()
     {
         //Takes mouse position from the camera 
         mousePos = mainCam.ScreenToWorldPoint(Mouse.current.position.ReadValue()); 
+
         //Vectors that point from the player to the mouse 
         lookDirection = (mousePos - body.position).normalized;
         lookDirectionUnnormalized = mousePos - body.position;
@@ -122,10 +127,12 @@ public class PlayerControl : MonoBehaviour
         if (!spriteRenderer.flipX && lookDirection.x < 0) 
         {
             spriteRenderer.flipX = true;
+            handleTransform.position = weaponPositions[0];
         }
         else if (spriteRenderer.flipX && lookDirection.x > 0) 
         {
             spriteRenderer.flipX = false;
+            handleTransform.position = weaponPositions[1];
         }
     }
 
