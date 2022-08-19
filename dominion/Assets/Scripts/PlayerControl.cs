@@ -136,12 +136,12 @@ public class PlayerControl : MonoBehaviour
     {
         if (lookDirection.x < -0.5) 
         {
-            Debug.Log("LEFT CHANGE ON" + lookDirection.ToString());
+            //Debug.Log("LEFT CHANGE ON" + lookDirection.ToString());
             handleTransform.localPosition = weaponPositions[0];
         }
         else if (lookDirection.x > 0.5) 
         {
-            Debug.Log("RIGHT CHANGE ON"+ lookDirection.ToString());
+            //Debug.Log("RIGHT CHANGE ON"+ lookDirection.ToString());
             handleTransform.localPosition = weaponPositions[1];
         }
     }
