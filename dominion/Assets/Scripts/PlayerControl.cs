@@ -154,7 +154,7 @@ public class PlayerControl : MonoBehaviour
         if (directionSpritesChosen != null) //Chooses sprite to show if there are no sprites
         {
             spriteRenderer.sprite = directionSpritesChosen[0];
-            gameObject.GetComponent<CompositeCollider2D>().GenerateGeometry();
+            //gameObject.GetComponent<CompositeCollider2D>().GenerateGeometry();
         }
         else
         {
