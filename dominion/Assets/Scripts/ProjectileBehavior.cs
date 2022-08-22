@@ -5,6 +5,11 @@ using UnityEngine;
 public class ProjectileBehavior : MonoBehaviour
 {
     string tagThatFired;
+
+    private void Start()
+    {
+        Destroy(gameObject, 2f);
+    }
     //Sets tag to stop projectile hitting itself
     public void SetFired(string passedTag)
     {
