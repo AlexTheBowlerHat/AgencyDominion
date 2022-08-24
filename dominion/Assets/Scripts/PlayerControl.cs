@@ -10,13 +10,17 @@ public class PlayerControl : MonoBehaviour
     public Rigidbody2D body;
     public Weapon weapon;
     public Transform weaponTransform;
+    public PolygonCollider2D playersPolygonCollider;
 
     //Sprite lists, doesn't include west due to use of spriterender.flipx
     public List<Sprite> northSprites;
     public List<Sprite> northEastSprites;
+    public List<Sprite> northWestSprites;
     public List<Sprite> eastSprites;
+    public List<Sprite> westSprites;
     public List<Sprite> southSprites;
     public List<Sprite> southEastSprites;
+    public List<Sprite> southWestSprites;
 
     //Variables for movement
     public float walkSpeed;
@@ -41,6 +45,7 @@ public class PlayerControl : MonoBehaviour
         mainCam = Camera.main;
         mainCam.enabled = true;
         handleTransform = transform.GetChild(0);
+        gameObject.GetComponent<PolygonCollider2D>();
     }
 
     //FixedUpdate is called every 0.02s
@@ -54,7 +59,7 @@ public class PlayerControl : MonoBehaviour
     {
         RetreiveMouseInfo();
         SetSprite();
-        FlipSprite();
+        //FlipSprite();
         FlipWeapon();
     }
 
@@ -121,17 +126,21 @@ public class PlayerControl : MonoBehaviour
 
     //Sprite Methods=======================================================
     //Flips player sprite depending on whether mouse is to left or right of the player
+    /*
     void FlipSprite()
     {
         if (!spriteRenderer.flipX && lookDirection.x < 0) 
         {
             spriteRenderer.flipX = true;
+            Collider2DExtensions.TryUpdateShapeToAttachedSprite(playersPolygonCollider);
         }
         else if (spriteRenderer.flipX && lookDirection.x > 0) 
         {
             spriteRenderer.flipX = false;
+            Collider2DExtensions.TryUpdateShapeToAttachedSprite(playersPolygonCollider);
         }
     }
+    */
     void FlipWeapon()
     {
         if (lookDirection.x < -0.5) 
@@ -154,7 +163,7 @@ public class PlayerControl : MonoBehaviour
         if (directionSpritesChosen != null) //Chooses sprite to show if there are no sprites
         {
             spriteRenderer.sprite = directionSpritesChosen[0];
-            //gameObject.GetComponent<CompositeCollider2D>().GenerateGeometry();
+            Collider2DExtensions.TryUpdateShapeToAttachedSprite(playersPolygonCollider);
         }
         else
         {
@@ -183,11 +192,10 @@ public class PlayerControl : MonoBehaviour
                 selectedSprites = southSprites;
                 break;
 
-            //Could tehnically put these together west & east
             //WEST 
             case float _ when 157.5f < threeSixtyLookAngle && threeSixtyLookAngle < 202.5f: 
                 //Debug.Log("WEST");
-                selectedSprites = eastSprites;
+                selectedSprites = westSprites;
                 break;
 
             //EAST 
@@ -199,7 +207,7 @@ public class PlayerControl : MonoBehaviour
             //NORTH WEST 
             case float _ when 112.5f < threeSixtyLookAngle && threeSixtyLookAngle < 157.5f:
                 //Debug.Log("NORTH WEST");
-                selectedSprites = northEastSprites;
+                selectedSprites = northWestSprites;
                 break;
 
             //NORTH EAST
@@ -211,7 +219,7 @@ public class PlayerControl : MonoBehaviour
             //SOUTH WEST
             case float _ when 202.5f < threeSixtyLookAngle && threeSixtyLookAngle < 247.5f:
                 //Debug.Log("SOUTH WEST");
-                selectedSprites = southEastSprites;
+                selectedSprites = southWestSprites;
                 break;
 
             //SOUTH EAST 
