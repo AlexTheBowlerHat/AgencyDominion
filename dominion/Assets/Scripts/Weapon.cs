@@ -6,10 +6,23 @@ public class Weapon : MonoBehaviour
 {
     public GameObject projectilePrefab;
     public Transform firePoint;
-    [SerializeField] private float projectileForce = 20f;
+    bool hasFired = false;
+
+    //Coroutine that fires bullet with a cooldown
+    public IEnumerator Shoot(Vector2 lookVector, float cooldown, float projectileForce, string firedTag)
+    {
+        if (!hasFired)
+        {
+            hasFired = true;
+            Fire(lookVector, firedTag, projectileForce);
+            yield return new WaitForSeconds(cooldown);
+            hasFired = false;
+        }
+        yield break;
+    }
    
    //Creates a projectile and fires it from the weapon, also passes the tag of object that fired it
-    public void Fire(Vector2 lookVector, string firedTag)
+    public void Fire(Vector2 lookVector, string firedTag, float projectileForce)
     {
         GameObject projectile = Instantiate(projectilePrefab, firePoint.position, firePoint.rotation);
         projectile.GetComponent<ProjectileBehavior>().SetFired(firedTag);

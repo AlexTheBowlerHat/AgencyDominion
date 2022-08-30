@@ -10,6 +10,7 @@ public class PlayerControl : MonoBehaviour
     public Rigidbody2D body;
     public Weapon weapon;
     public Transform weaponTransform;
+    public SpriteRenderer weaponSpriter;
     public PolygonCollider2D playersPolygonCollider;
 
     //Sprite lists, doesn't include west due to use of spriterender.flipx
@@ -35,7 +36,6 @@ public class PlayerControl : MonoBehaviour
     //Variables for shooting
     public Vector2 mousePos;
     public Camera mainCam;
-    bool hasFired = false;
     public Transform handleTransform;
     public Vector3[] weaponPositions = {new Vector3(-0.5f,0,0),new Vector3(0.5f,0,0)};
 
@@ -46,6 +46,7 @@ public class PlayerControl : MonoBehaviour
         mainCam.enabled = true;
         handleTransform = transform.GetChild(0);
         gameObject.GetComponent<PolygonCollider2D>();
+        weaponSpriter = weaponTransform.GetComponent<SpriteRenderer>();
     }
 
     //FixedUpdate is called every 0.02s
@@ -105,7 +106,7 @@ public class PlayerControl : MonoBehaviour
     }
 
     //Coroutine that fires bullet with a cooldown
-    IEnumerator Shoot()
+    /*IEnumerator Shoot()
     {
         if (!hasFired)
         {
@@ -117,11 +118,11 @@ public class PlayerControl : MonoBehaviour
         }
         yield break;
     }
-
+    */
     //Invoked on F press, starts a coroutine to shoot
     public void Fire(InputAction.CallbackContext context)
     {
-        StartCoroutine(Shoot());
+        StartCoroutine(weapon.Shoot(RetreiveMouseInfo(), 0.2f, 5f, gameObject.tag));
     }
 
     //Sprite Methods=======================================================
@@ -147,11 +148,13 @@ public class PlayerControl : MonoBehaviour
         {
             //Debug.Log("LEFT CHANGE ON" + lookDirection.ToString());
             handleTransform.localPosition = weaponPositions[0];
+            weaponSpriter.flipX = true;
         }
         else if (lookDirection.x > 0.5) 
         {
             //Debug.Log("RIGHT CHANGE ON"+ lookDirection.ToString());
             handleTransform.localPosition = weaponPositions[1];
+            weaponSpriter.flipX = true;
         }
     }
 
