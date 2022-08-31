@@ -27,12 +27,12 @@ public class HealthScript : MonoBehaviour
     void Start()
     {
         healthPoints = startingHealth;
-        parented = gameObject;
-        parentedTag = parented.tag;
+        parentedTag = gameObject.tag;
     }
     public void Eliminate()
     {
         objectTagToString = parentedTag.ToString();
+        Debug.Log("Bye: " + objectTagToString);
        // _healthPoints -= 10f;
     }
        

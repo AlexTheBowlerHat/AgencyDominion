@@ -22,7 +22,10 @@ public class ProjectileBehavior : MonoBehaviour
         if(collision.tag != tagThatFired)
         {
             Destroy(gameObject);
+            if (collision.GetComponent<HealthScript>())
+            {
+                collision.GetComponent<HealthScript>().Eliminate();
+            }
         }
-        
     }
 }

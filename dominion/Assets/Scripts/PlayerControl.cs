@@ -144,6 +144,36 @@ public class PlayerControl : MonoBehaviour
     */
     void FlipWeapon()
     {
+        switch (lookDirection.x)
+        {
+            //TOP LEFT
+            case float _ when lookDirection.x < -0.5 && lookDirection.y > 0:
+                weaponSpriter.flipX = false;
+                handleTransform.localPosition = weaponPositions[0];
+                break;
+
+            //TOP RIGHT
+            case float _ when lookDirection.x > 0.5 && lookDirection.y > 0:
+                weaponSpriter.flipX = true;
+                handleTransform.localPosition = weaponPositions[1];
+                break;
+
+            //BOTTOM LEFT
+            case float _ when lookDirection.x < -0.5 && lookDirection.y < 0:
+                weaponSpriter.flipX = true;
+                handleTransform.localPosition = weaponPositions[0];
+                break;
+
+            //BOTTOM RIGHT
+            case float _ when lookDirection.x > 0.5 && lookDirection.y < 0:
+                weaponSpriter.flipX = false;
+                handleTransform.localPosition = weaponPositions[1];
+                break;
+
+            default:
+                break;
+        }
+        /*
         if (lookDirection.x < -0.5) 
         {
             //Debug.Log("LEFT CHANGE ON" + lookDirection.ToString());
@@ -154,8 +184,9 @@ public class PlayerControl : MonoBehaviour
         {
             //Debug.Log("RIGHT CHANGE ON"+ lookDirection.ToString());
             handleTransform.localPosition = weaponPositions[1];
-            weaponSpriter.flipX = true;
+            weaponSpriter.flipX = false;
         }
+        */
     }
 
     //Sets the sprite of the player to whichever direction they're 'looking' in
