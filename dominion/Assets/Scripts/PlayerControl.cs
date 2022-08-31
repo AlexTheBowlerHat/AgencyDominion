@@ -147,25 +147,25 @@ public class PlayerControl : MonoBehaviour
         switch (lookDirection.x)
         {
             //TOP LEFT
-            case float _ when lookDirection.x < -0.5 && lookDirection.y > 0:
+            case float _ when lookDirection.x < -0.5 && lookDirection.y > 0.25:
                 weaponSpriter.flipX = false;
                 handleTransform.localPosition = weaponPositions[0];
                 break;
 
             //TOP RIGHT
-            case float _ when lookDirection.x > 0.5 && lookDirection.y > 0:
+            case float _ when lookDirection.x > 0.5 && lookDirection.y > 0.25:
                 weaponSpriter.flipX = true;
                 handleTransform.localPosition = weaponPositions[1];
                 break;
 
             //BOTTOM LEFT
-            case float _ when lookDirection.x < -0.5 && lookDirection.y < 0:
+            case float _ when lookDirection.x < -0.5 && lookDirection.y < 0.25:
                 weaponSpriter.flipX = true;
                 handleTransform.localPosition = weaponPositions[0];
                 break;
 
             //BOTTOM RIGHT
-            case float _ when lookDirection.x > 0.5 && lookDirection.y < 0:
+            case float _ when lookDirection.x > 0.5 && lookDirection.y < 0.25:
                 weaponSpriter.flipX = false;
                 handleTransform.localPosition = weaponPositions[1];
                 break;
