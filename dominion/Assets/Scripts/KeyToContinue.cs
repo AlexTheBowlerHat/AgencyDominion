@@ -18,17 +18,18 @@ public class KeyToContinue : MonoBehaviour
     {
         if (Keyboard.current.anyKey.isPressed || Mouse.current.leftButton.isPressed || Mouse.current.middleButton.isPressed || Mouse.current.rightButton.isPressed && currentSceneIndex == 0)
         {
-            SceneManager.LoadSceneAsync(nextScene, LoadSceneMode.Single);
-            
+            SceneManager.LoadSceneAsync("TestLevel", LoadSceneMode.Single);
+            SetNextScene();
         }
     }
-    private static IEnumerator LoadNextScene()
+    
+    private static IEnumerator SetNextScene()
     {
-        while (!nextScene.isLoaded)
+        while (!SceneManager.GetSceneByName("TestLevel").isLoaded)
         {
             yield return new WaitForSeconds(0.1f);
         }
-        SceneManager.SetActiveScene(nextScene);
+        SceneManager.SetActiveScene(SceneManager.GetSceneByName("TestLevel"));
         SceneManager.UnloadSceneAsync("Disclaimer");
     }
 
