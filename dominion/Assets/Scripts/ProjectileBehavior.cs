@@ -8,7 +8,7 @@ public class ProjectileBehavior : MonoBehaviour
 
     private void Start()
     {
-        Destroy(gameObject, 2f);
+        Destroy(gameObject, 10f);
     }
     //Sets tag to stop projectile hitting itself
     public void SetFired(string passedTag)
@@ -19,7 +19,7 @@ public class ProjectileBehavior : MonoBehaviour
     //Cleans up projectile once it hits an object, checks it isn't hitting its owner
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if(collision.tag != tagThatFired)
+        if(collision.tag != tagThatFired && !collision.isTrigger) 
         {
             Destroy(gameObject);
             if (collision.GetComponent<HealthScript>())

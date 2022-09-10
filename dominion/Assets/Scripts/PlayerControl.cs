@@ -12,6 +12,7 @@ public class PlayerControl : MonoBehaviour
     public Transform weaponTransform;
     public SpriteRenderer weaponSpriter;
     public PolygonCollider2D playersPolygonCollider;
+    public Transform firePoint;
 
     //Sprite lists, doesn't include west due to use of spriterender.flipx
     public List<Sprite> northSprites;
@@ -46,6 +47,7 @@ public class PlayerControl : MonoBehaviour
         mainCam.enabled = true;
         handleTransform = transform.GetChild(0);
         gameObject.GetComponent<PolygonCollider2D>();
+        weapon = weaponTransform.GetComponent<Weapon>();
         weaponSpriter = weaponTransform.GetComponent<SpriteRenderer>();
     }
 
@@ -122,7 +124,7 @@ public class PlayerControl : MonoBehaviour
     //Invoked on F press, starts a coroutine to shoot
     public void Fire(InputAction.CallbackContext context)
     {
-        StartCoroutine(weapon.Shoot(RetreiveMouseInfo(), 0.2f, 5f, gameObject.tag));
+        StartCoroutine(weapon.Shoot(RetreiveMouseInfo(), 0.2f, 5f, gameObject.tag, firePoint));
     }
 
     //Sprite Methods=======================================================

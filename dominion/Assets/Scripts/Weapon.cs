@@ -5,16 +5,15 @@ using UnityEngine;
 public class Weapon : MonoBehaviour
 {
     public GameObject projectilePrefab;
-    public Transform firePoint;
     bool hasFired = false;
 
     //Coroutine that fires bullet with a cooldown
-    public IEnumerator Shoot(Vector2 lookVector, float cooldown, float projectileForce, string firedTag)
+    public IEnumerator Shoot(Vector2 lookVector, float cooldown, float projectileForce, string firedTag, Transform firePoint)
     {
         if (!hasFired)
         {
             hasFired = true;
-            Fire(lookVector, firedTag, projectileForce);
+            Fire(lookVector, firedTag, projectileForce, firePoint);
             yield return new WaitForSeconds(cooldown);
             hasFired = false;
         }
@@ -22,7 +21,7 @@ public class Weapon : MonoBehaviour
     }
    
    //Creates a projectile and fires it from the weapon, also passes the tag of object that fired it
-    public void Fire(Vector2 lookVector, string firedTag, float projectileForce)
+    public void Fire(Vector2 lookVector, string firedTag, float projectileForce, Transform firePoint)
     {
         GameObject projectile = Instantiate(projectilePrefab, firePoint.position, firePoint.rotation);
         projectile.GetComponent<ProjectileBehavior>().SetFired(firedTag);

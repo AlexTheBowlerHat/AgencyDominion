@@ -169,7 +169,7 @@ MonoBehaviour:
     ModeOverride: 0
     LensShift: {x: 0, y: 0}
     GateFit: 2
-    m_SensorSize: {x: 1.7777778, y: 1}
+    m_SensorSize: {x: 1.7783883, y: 1}
   m_Transitions:
     m_BlendHint: 0
     m_InheritPosition: 0
@@ -186,7 +186,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 373136865}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -10}
+  m_LocalPosition: {x: -1.48, y: -0.43, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -204,7 +204,7 @@ GameObject:
   m_Component:
   - component: {fileID: 446487646}
   m_Layer: 3
-  m_Name: FirePoint
+  m_Name: PLAYERFirePoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -304,7 +304,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 519420028}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -10}
+  m_LocalPosition: {x: -1.48, y: -0.43, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1254,12 +1254,13 @@ GameObject:
   - component: {fileID: 678122362}
   - component: {fileID: 678122361}
   - component: {fileID: 678122360}
-  - component: {fileID: 678122359}
-  - component: {fileID: 678122358}
   - component: {fileID: 678122363}
+  - component: {fileID: 678122359}
+  - component: {fileID: 678122364}
+  - component: {fileID: 678122358}
   m_Layer: 0
   m_Name: TestTurret
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1284,7 +1285,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 4
 --- !u!58 &678122359
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -1300,7 +1301,7 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 2.5
+  m_Radius: 3
 --- !u!114 &678122360
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1314,6 +1315,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   weapon: {fileID: 1429142230}
+  firePoint: {fileID: 1956417148}
   playerInZone: 0
   enemyWalkSpeed: 20
 --- !u!212 &678122361
@@ -1379,7 +1381,8 @@ Transform:
   m_LocalPosition: {x: 2.714, y: 0.423, z: 0.053944927}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 1956417148}
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1395,8 +1398,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cbceca15de0e0b24fa7183ed302b1e6a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  projectilePrefab: {fileID: 0}
-  firePoint: {fileID: 0}
+  projectilePrefab: {fileID: 5785742136871053089, guid: 8bb3d3ff5dee4f04d836c266dfc50bcb, type: 3}
+--- !u!70 &678122364
+CapsuleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 678122357}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0.011903882, y: 0}
+  m_Size: {x: 0.39687324, y: 0.80160284}
+  m_Direction: 0
 --- !u!1 &1209825408
 GameObject:
   m_ObjectHideFlags: 0
@@ -1439,6 +1457,7 @@ MonoBehaviour:
   weaponTransform: {fileID: 1429142228}
   weaponSpriter: {fileID: 0}
   playersPolygonCollider: {fileID: 1209825415}
+  firePoint: {fileID: 446487646}
   northSprites:
   - {fileID: -2442548626146251763, guid: 46e918b8a9b7eba43bff6252828e7a88, type: 3}
   northEastSprites:
@@ -1463,7 +1482,7 @@ MonoBehaviour:
   lookDirectionUnnormalized: {x: 0, y: 0}
   mousePos: {x: 0, y: 0}
   mainCam: {fileID: 519420031}
-  handleTransform: {fileID: 0}
+  handleTransform: {fileID: 446487646}
   weaponPositions:
   - {x: -0.5, y: 0, z: 0}
   - {x: 0.5, y: 0, z: 0}
@@ -1548,7 +1567,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1209825408}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -1.48, y: -0.43, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1946,7 +1965,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   projectilePrefab: {fileID: 5785742136871053089, guid: 8bb3d3ff5dee4f04d836c266dfc50bcb, type: 3}
-  firePoint: {fileID: 446487646}
 --- !u!1 &1751564646
 GameObject:
   m_ObjectHideFlags: 0
@@ -2620,3 +2638,34 @@ Tilemap:
     e31: 0
     e32: 0
     e33: 1
+--- !u!1 &1956417147
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1956417148}
+  m_Layer: 0
+  m_Name: ENEMYFirePoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1956417148
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1956417147}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.176, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 678122362}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
