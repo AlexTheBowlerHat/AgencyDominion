@@ -15,17 +15,28 @@ public class ProjectileBehavior : MonoBehaviour
     {
         tagThatFired = passedTag;
     }
+    private void ProjectileCleanup(Collider2D collision)
+    {
+        Destroy(gameObject);
+        if (collision.tag == "Player"|| collision.tag == "Enemy")
+        {
+            HealthScript collidedHealthClass = collision.GetComponent<HealthScript>();
+            if (collidedHealthClass == null) return;
+            if (!collidedHealthClass.invincible)
+            {
+              collidedHealthClass.healthPoints -= 1f; 
+            }
+        }
+
+    }
 
     //Cleans up projectile once it hits an object, checks it isn't hitting its owner
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if(collision.tag != tagThatFired && !collision.isTrigger) 
+        //Debug.Log(collision.tag);
+        if(collision.tag != tagThatFired && collision.tag != "NotToBeCollided") 
         {
-            Destroy(gameObject);
-            if (collision.GetComponent<HealthScript>())
-            {
-                collision.GetComponent<HealthScript>().Eliminate();
-            }
+            ProjectileCleanup(collision);
         }
     }
 }

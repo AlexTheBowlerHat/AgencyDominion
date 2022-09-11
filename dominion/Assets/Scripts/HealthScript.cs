@@ -6,17 +6,20 @@ public class HealthScript : MonoBehaviour
 {
     public GameObject parented;
     public string parentedTag;
-    public float startingHealth = 100f; //Health to begin
+    [SerializeField]
+    private float startingHealth; //Health to begin
+    private float maxHealth;
     [SerializeField]
     private float _healthPoints = 100f;
     private string objectTagToString;
+    public bool invincible = false;
 
-    public float healthPoints //Property that gets the 
+    public float healthPoints //Updates and clamps health points
     {
         get { return _healthPoints; }
         set
         {
-            _healthPoints = Mathf.Clamp(value, 0f, 100f); //Sets value and makes sure its between 0 and 100
+            _healthPoints = Mathf.Clamp(value, 0f, maxHealth); //Sets value and makes sure its between 0 and 100
             if (_healthPoints <= 0f)
             {
                 Eliminate(); //Kill Method, differs between player and enemy
@@ -27,6 +30,7 @@ public class HealthScript : MonoBehaviour
     void Start()
     {
         healthPoints = startingHealth;
+        maxHealth = startingHealth;
         parentedTag = gameObject.tag;
     }
     public void Eliminate()

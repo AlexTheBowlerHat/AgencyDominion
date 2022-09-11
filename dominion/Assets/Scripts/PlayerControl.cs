@@ -39,6 +39,7 @@ public class PlayerControl : MonoBehaviour
     public Camera mainCam;
     public Transform handleTransform;
     public Vector3[] weaponPositions = {new Vector3(-0.5f,0,0),new Vector3(0.5f,0,0)};
+    public bool holdAccessibility = false;
 
     void Start()
     {
@@ -106,44 +107,11 @@ public class PlayerControl : MonoBehaviour
         //Debug.Log(threeSixtyLookAngle);
         return lookDirection;
     }
-
-    //Coroutine that fires bullet with a cooldown
-    /*IEnumerator Shoot()
-    {
-        if (!hasFired)
-        {
-            hasFired = true;
-            Vector2 lookVector = RetreiveMouseInfo();
-            weapon.Fire(lookVector, gameObject.tag);
-            yield return new WaitForSeconds(0.2f);
-            hasFired = false;
-        }
-        yield break;
-    }
-    */
     //Invoked on F press, starts a coroutine to shoot
     public void Fire(InputAction.CallbackContext context)
     {
-        StartCoroutine(weapon.Shoot(RetreiveMouseInfo(), 0.2f, 5f, gameObject.tag, firePoint));
+        StartCoroutine(weapon.Shoot(RetreiveMouseInfo(), 0.2f, 5f, gameObject.tag, firePoint, holdAccessibility));
     }
-
-    //Sprite Methods=======================================================
-    //Flips player sprite depending on whether mouse is to left or right of the player
-    /*
-    void FlipSprite()
-    {
-        if (!spriteRenderer.flipX && lookDirection.x < 0) 
-        {
-            spriteRenderer.flipX = true;
-            Collider2DExtensions.TryUpdateShapeToAttachedSprite(playersPolygonCollider);
-        }
-        else if (spriteRenderer.flipX && lookDirection.x > 0) 
-        {
-            spriteRenderer.flipX = false;
-            Collider2DExtensions.TryUpdateShapeToAttachedSprite(playersPolygonCollider);
-        }
-    }
-    */
     void FlipWeapon()
     {
         switch (lookDirection.x)
@@ -175,20 +143,6 @@ public class PlayerControl : MonoBehaviour
             default:
                 break;
         }
-        /*
-        if (lookDirection.x < -0.5) 
-        {
-            //Debug.Log("LEFT CHANGE ON" + lookDirection.ToString());
-            handleTransform.localPosition = weaponPositions[0];
-            weaponSpriter.flipX = true;
-        }
-        else if (lookDirection.x > 0.5) 
-        {
-            //Debug.Log("RIGHT CHANGE ON"+ lookDirection.ToString());
-            handleTransform.localPosition = weaponPositions[1];
-            weaponSpriter.flipX = false;
-        }
-        */
     }
 
     //Sets the sprite of the player to whichever direction they're 'looking' in

@@ -8,7 +8,7 @@ public class Weapon : MonoBehaviour
     bool hasFired = false;
 
     //Coroutine that fires bullet with a cooldown
-    public IEnumerator Shoot(Vector2 lookVector, float cooldown, float projectileForce, string firedTag, Transform firePoint)
+    public IEnumerator Shoot(Vector2 lookVector, float cooldown, float projectileForce, string firedTag, Transform firePoint, bool holdAccessibility)
     {
         if (!hasFired)
         {
@@ -23,8 +23,15 @@ public class Weapon : MonoBehaviour
    //Creates a projectile and fires it from the weapon, also passes the tag of object that fired it
     public void Fire(Vector2 lookVector, string firedTag, float projectileForce, Transform firePoint)
     {
+        Vector2 projectileDirection = (projectileForce * lookVector);
+        /*
+        Debug.Log(firedTag + " CALLED FIRE()");
+        Debug.Log("FORCE FIRED IS: " + projectileForce * lookVector);
+        Debug.Log("MAGNITUDE IS: " + (projectileForce * lookVector).magnitude);
+        */
         GameObject projectile = Instantiate(projectilePrefab, firePoint.position, firePoint.rotation);
+        projectile.tag = "NotToBeCollided";
         projectile.GetComponent<ProjectileBehavior>().SetFired(firedTag);
-        projectile.GetComponent<Rigidbody2D>().AddForce(lookVector * projectileForce, ForceMode2D.Impulse);
+        projectile.GetComponent<Rigidbody2D>().velocity = projectileDirection;
     }
 }

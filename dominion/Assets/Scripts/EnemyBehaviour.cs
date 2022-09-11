@@ -7,6 +7,9 @@ public class EnemyBehaviour : MonoBehaviour
     public Weapon weapon;
     public Transform firePoint;
     private Vector2 enemyToPlayer;
+    private Vector2 enemyToPlayerNormalised;
+    [SerializeField]
+    private float enemyFireForce;
     public bool playerInZone = false;
     Rigidbody2D body;
     public float enemyWalkSpeed;
@@ -20,13 +23,13 @@ public class EnemyBehaviour : MonoBehaviour
 
     public void MoveEnemy()
     {
-        body.velocity = enemyToPlayer * enemyWalkSpeed * Time.fixedDeltaTime; //Velocity method
+        body.velocity = enemyToPlayerNormalised * enemyWalkSpeed * Time.fixedDeltaTime; //Velocity method
     }
     public void AttackPlayer()
     {
-        StartCoroutine(weapon.Shoot(enemyToPlayer, 1f, 1f, gameObject.tag, firePoint));
+        StartCoroutine(weapon.Shoot(enemyToPlayerNormalised, 1f, enemyFireForce, gameObject.tag, firePoint, false));
     }
-
+    //Iterates itself once called until the player is out of range, calls move and attack functions with a delay each iteration
     public IEnumerator PlayerDetected(Vector2 playerPosition, GameObject playerObject, float playerDistanceMag)
     {
         if (playerDistanceMag<=5)
@@ -35,6 +38,8 @@ public class EnemyBehaviour : MonoBehaviour
             playerPosition = playerObject.transform.position;
             enemyToPlayer = playerPosition - (Vector2)gameObject.transform.position;
             playerDistanceMag = enemyToPlayer.magnitude;
+            enemyToPlayerNormalised = enemyToPlayer.normalized;
+
             MoveEnemy();
             AttackPlayer();
             //Debug.Log("Got to here!");
@@ -59,14 +64,4 @@ public class EnemyBehaviour : MonoBehaviour
             StartCoroutine(PlayerDetected(playerPos, playerObject, playerMag));
         }
     }
-    /*
-    private void OnTriggerExit2D(Collider2D collision)
-    {
-        if (collision.tag == "Player" && collision is CircleCollider2D)
-        {
-            //Debug.Log("exit ugg detected");
-            playerInZone = false;
-        }
-    }
-    */
 }
