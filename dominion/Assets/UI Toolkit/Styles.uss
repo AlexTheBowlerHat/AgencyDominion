@@ -1,0 +1,23 @@
+.button-default {
+    -unity-font: url('project://database/Assets/UI%20Toolkit/Fonts/RussoOne-Regular.ttf?fileID=12800000&guid=feb766379d98cfb4e85ae694393e882e&type=3#RussoOne-Regular');
+    font-size: 20px;
+    border-left-width: 0;
+    border-right-width: 0;
+    border-top-width: 0;
+    border-bottom-width: 0;
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+    flex-direction: column;
+    width: 70%;
+    height: 50px;
+    background-color: rgb(255, 255, 255);
+    transform-origin: center;
+    margin-top: 10px;
+    padding-top: 10px;
+    top: 6%;
+    -unity-font-definition: none;
+    -unity-font-style: normal;
+    margin-bottom: 10px;
+}
