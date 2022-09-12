@@ -11,25 +11,25 @@ public class KeyToContinue : MonoBehaviour
     private void Start()
     {
        currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
-       nextScene = SceneManager.GetSceneByName("TestLevel");
+       nextScene = SceneManager.GetSceneByBuildIndex(1);
     }
     // Update is called once per frame
     void Update()
     {
         if (Keyboard.current.anyKey.isPressed || Mouse.current.leftButton.isPressed || Mouse.current.middleButton.isPressed || Mouse.current.rightButton.isPressed && currentSceneIndex == 0)
         {
-            SceneManager.LoadSceneAsync("TestLevel", LoadSceneMode.Single);
+            SceneManager.LoadSceneAsync("StartMenu", LoadSceneMode.Single);
             SetNextScene();
         }
     }
     
     private static IEnumerator SetNextScene()
     {
-        while (!SceneManager.GetSceneByName("TestLevel").isLoaded)
+        while (!SceneManager.GetSceneByName("StartMenu").isLoaded)
         {
             yield return new WaitForSeconds(0.1f);
         }
-        SceneManager.SetActiveScene(SceneManager.GetSceneByName("TestLevel"));
+        SceneManager.SetActiveScene(SceneManager.GetSceneByBuildIndex(1));
         SceneManager.UnloadSceneAsync("Disclaimer");
     }
 

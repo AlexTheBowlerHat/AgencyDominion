@@ -1,9 +1,11 @@
-<?xml version="1.0" encoding="utf-8"?>
-<engine:UXML
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xmlns:engine="UnityEngine.UIElements"
-    xmlns:editor="UnityEditor.UIElements"
-    xsi:noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd"
->
-    
-</engine:UXML>
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/UI%20Toolkit/Styles.uss?fileID=7433441132597879392&amp;guid=71cd138d7a80b9748812a84a84d5f775&amp;type=3#Styles" />
+    <ui:VisualElement name="Background" style="width: 100%; height: 100%; justify-content: space-between; align-items: stretch; flex-direction: row;">
+        <ui:VisualElement name="Left" style="justify-content: space-around;" />
+        <ui:VisualElement name="Middle">
+            <ui:Label text="Dominion" display-tooltip-when-elided="true" name="Title" class="label-default" style="height: 83px; position: relative; bottom: auto; -unity-font-style: bold; -unity-font: url(&apos;project://database/Assets/UI%20Toolkit/Fonts/RussoOne-Regular.ttf?fileID=12800000&amp;guid=feb766379d98cfb4e85ae694393e882e&amp;type=3#RussoOne-Regular&apos;); font-size: 40px; flex-direction: column; flex-wrap: wrap; justify-content: flex-start; -unity-font-definition: none; top: auto;" />
+            <ui:VisualElement name="ButtonsContainer" style="height: 321px; width: 209px; background-color: rgba(255, 255, 255, 255); border-top-left-radius: 3px; border-bottom-left-radius: 3px; border-top-right-radius: 3px; border-bottom-right-radius: 3px;" />
+        </ui:VisualElement>
+        <ui:VisualElement name="Right" />
+    </ui:VisualElement>
+</ui:UXML>

@@ -13,12 +13,20 @@ public class EnemyBehaviour : MonoBehaviour
     public bool playerInZone = false;
     Rigidbody2D body;
     public float enemyWalkSpeed;
+    //Animations & states 
+    Animator animator;
+    string currentAnimState;
+    const string enemySleepIdle =  "EnemySleepIdle";
+    const string enemyAwakeIdle =  "EnemyAwakeIdle";
+    const string enemyAwaking =  "EnemyAwakeToSleep";
+    const string enemySleeping =  "EnemySleepToAwake";
     
 
     private void Start()
     {
         body = gameObject.GetComponent<Rigidbody2D>();
         weapon = gameObject.GetComponent<Weapon>();
+        animator = gameObject.GetComponent<Animator>();
     }
 
     public void MoveEnemy()
@@ -48,20 +56,39 @@ public class EnemyBehaviour : MonoBehaviour
         }
         else
         {
+            ChangeAnimationState(enemySleeping);
+            ChangeAnimationState(enemySleepIdle);
+            playerInZone = false;
             yield break;
         }
     }
-
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.tag == "Player")
         {
             //Debug.Log("enter oog detected");
-            //playerInZone = true;
+        
             Vector2 playerPos = collision.transform.position;
             GameObject playerObject = collision.gameObject;
             float playerMag = (playerPos - (Vector2)gameObject.transform.position).magnitude;
+            if(!playerInZone && playerMag <=5)
+            {
+                ChangeAnimationState(enemyAwaking);
+                ChangeAnimationState(enemyAwakeIdle);
+            }
+            playerInZone = true;
             StartCoroutine(PlayerDetected(playerPos, playerObject, playerMag));
         }
+    }
+
+// Derived from Dani Krossing's method
+    void ChangeAnimationState(string newState)
+    {
+        //Stops interrupting itself
+        if (currentAnimState == newState) return;
+        //Plays aniamtion
+        animator.Play(newState);
+        //Updates state
+
     }
 }
