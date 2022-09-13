@@ -1,0 +1,16 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/UI%20Toolkit/Styles.uss?fileID=7433441132597879392&amp;guid=71cd138d7a80b9748812a84a84d5f775&amp;type=3#Styles" />
+    <ui:VisualElement name="BG" class="Background-Aligner">
+        <ui:VisualElement name="Left" />
+        <ui:VisualElement name="Middle">
+            <ui:VisualElement class="default-container" style="top: 10%;">
+                <ui:Label text="&lt;u&gt;Controls" display-tooltip-when-elided="true" name="Controls" class="label-default title-label-small-default" />
+                <ui:Label text="W - Move Up&#10;A - Move Left&#10;S - Move Down&#10;D - Move Right&#10;&#10;Left Mouse Button - Fire Weapon" display-tooltip-when-elided="true" name="PlayerControls" class="label-default smaller-label-default" />
+                <ui:Label text="&lt;u&gt;Objective&lt;/u&gt;" display-tooltip-when-elided="true" name="Objective" class="label-default smaller-label-default title-label-small-default" style="height: 50px; width: 100%; padding-top: 0;" />
+                <ui:Label text="Eliminate threats before they eliminate you.&#10;&#10;Escape." display-tooltip-when-elided="true" name="Whattodo" class="smaller-label-default label-default" style="height: 20%; width: 100%; white-space: normal; padding-bottom: 10px; margin-top: 10px;" />
+                <ui:Button text="Exit To Main Menu" display-tooltip-when-elided="true" name="Exit" class="button-default" style="top: auto; padding-left: 0; padding-right: 0; padding-top: 0; padding-bottom: 0; margin-left: 0; margin-right: 0; margin-top: 10px; margin-bottom: 0; width: 60%; height: 40px;" />
+            </ui:VisualElement>
+        </ui:VisualElement>
+        <ui:VisualElement name="Right" />
+    </ui:VisualElement>
+</ui:UXML>

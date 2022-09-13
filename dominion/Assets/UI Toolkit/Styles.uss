@@ -14,10 +14,136 @@
     height: 50px;
     background-color: rgb(255, 255, 255);
     transform-origin: center;
-    margin-top: 10px;
-    padding-top: 10px;
+    margin-top: 15px;
+    padding-top: 0;
     top: 6%;
     -unity-font-definition: none;
     -unity-font-style: normal;
     margin-bottom: 10px;
+    color: rgb(0, 0, 0);
+    align-items: center;
+    justify-content: center;
+    flex-wrap: nowrap;
+    -unity-text-align: middle-center;
+}
+
+.button-default:hover {
+    -unity-font: url('project://database/Assets/UI%20Toolkit/Fonts/RussoOne-Regular.ttf?fileID=12800000&guid=feb766379d98cfb4e85ae694393e882e&type=3#RussoOne-Regular');
+    font-size: 20px;
+    border-left-width: 0;
+    border-right-width: 0;
+    border-top-width: 0;
+    border-bottom-width: 0;
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+    flex-direction: column;
+    width: 70%;
+    height: 50px;
+    background-color: rgb(115, 115, 115);
+    transform-origin: center;
+    margin-top: 15px;
+    padding-top: 0;
+    top: 6%;
+    -unity-font-definition: none;
+    -unity-font-style: normal;
+    margin-bottom: 10px;
+    color: rgb(0, 0, 0);
+    align-items: center;
+    justify-content: center;
+    flex-wrap: nowrap;
+    -unity-text-align: middle-center;
+    -unity-background-image-tint-color: rgb(84, 84, 84);
+}
+
+.button-default:active {
+    -unity-font: url('project://database/Assets/UI%20Toolkit/Fonts/RussoOne-Regular.ttf?fileID=12800000&guid=feb766379d98cfb4e85ae694393e882e&type=3#RussoOne-Regular');
+    font-size: 20px;
+    border-left-width: 0;
+    border-right-width: 0;
+    border-top-width: 0;
+    border-bottom-width: 0;
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+    flex-direction: column;
+    width: 70%;
+    height: 50px;
+    background-color: rgb(106, 106, 106);
+    transform-origin: center;
+    margin-top: 15px;
+    padding-top: 0;
+    top: 6%;
+    -unity-font-definition: none;
+    -unity-font-style: normal;
+    margin-bottom: 10px;
+    color: rgb(255, 255, 255);
+    align-items: center;
+    justify-content: center;
+    flex-wrap: nowrap;
+    -unity-text-align: middle-center;
+}
+
+.Background-Aligner {
+    width: 100%;
+    height: 100%;
+    justify-content: space-between;
+    align-items: stretch;
+    flex-direction: row;
+}
+
+.default-container {
+    height: 424px;
+    width: 374px;
+    background-color: rgb(93, 36, 132);
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+    align-items: center;
+    justify-content: flex-start;
+    flex-direction: column;
+    flex-wrap: wrap;
+    flex-shrink: 1;
+    margin-top: 0;
+    margin-bottom: 0;
+    -unity-text-align: middle-center;
+    top: 10px;
+}
+
+.label-default {
+    height: 59px;
+    position: relative;
+    bottom: auto;
+    -unity-font-style: bold;
+    -unity-font: url('project://database/Assets/UI%20Toolkit/Fonts/RussoOne-Regular.ttf?fileID=12800000&guid=feb766379d98cfb4e85ae694393e882e&type=3#RussoOne-Regular');
+    font-size: 40px;
+    flex-direction: column;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    -unity-font-definition: none;
+    top: 15px;
+    color: rgb(255, 255, 255);
+    -unity-text-align: upper-center;
+    width: 215px;
+}
+
+.smaller-label-default {
+    -unity-font-style: normal;
+    font-size: 20px;
+    width: 100%;
+    height: 154px;
+    -unity-text-align: middle-center;
+    padding-right: 0;
+    top: 0;
+}
+
+.title-label-small-default {
+    width: 100%;
+    font-size: 30px;
+    margin-bottom: 0;
+    padding-bottom: 0;
+    margin-top: 0;
 }

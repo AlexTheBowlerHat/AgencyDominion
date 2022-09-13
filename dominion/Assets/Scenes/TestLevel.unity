@@ -169,7 +169,7 @@ MonoBehaviour:
     ModeOverride: 0
     LensShift: {x: 0, y: 0}
     GateFit: 2
-    m_SensorSize: {x: 1.7777778, y: 1}
+    m_SensorSize: {x: 1.7783883, y: 1}
   m_Transitions:
     m_BlendHint: 0
     m_InheritPosition: 0
@@ -1471,10 +1471,10 @@ GameObject:
   - component: {fileID: 678122361}
   - component: {fileID: 678122360}
   - component: {fileID: 678122363}
+  - component: {fileID: 678122365}
   - component: {fileID: 678122359}
   - component: {fileID: 678122364}
   - component: {fileID: 678122358}
-  - component: {fileID: 678122365}
   - component: {fileID: 678122366}
   m_Layer: 0
   m_Name: TestTurret
@@ -1535,6 +1535,7 @@ MonoBehaviour:
   weapon: {fileID: 1429142230}
   firePoint: {fileID: 1956417148}
   enemyFireForce: 5
+  enemyCooldown: 1
   playerInZone: 0
   enemyWalkSpeed: 100
 --- !u!212 &678122361
@@ -1619,6 +1620,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   projectilePrefab: {fileID: 5785742136871053089, guid: 8bb3d3ff5dee4f04d836c266dfc50bcb, type: 3}
+  projectileDamage: 1
 --- !u!70 &678122364
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -1650,8 +1652,8 @@ MonoBehaviour:
   parented: {fileID: 0}
   parentedTag: 
   startingHealth: 10
-  _healthPoints: 100
   invincible: 0
+  _healthPoints: 10
 --- !u!95 &678122366
 Animator:
   serializedVersion: 4
@@ -2096,8 +2098,8 @@ MonoBehaviour:
   parented: {fileID: 1209825408}
   parentedTag: Player
   startingHealth: 3
-  _healthPoints: 100
   invincible: 0
+  _healthPoints: 3
 --- !u!58 &1209825417
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -2317,6 +2319,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   projectilePrefab: {fileID: 5785742136871053089, guid: 4e4c0aa144029274fbb2cde9a46a2e52, type: 3}
+  projectileDamage: 1
 --- !u!1 &1494603714
 GameObject:
   m_ObjectHideFlags: 0

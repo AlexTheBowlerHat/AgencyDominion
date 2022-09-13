@@ -27,7 +27,7 @@ public class HealthUI : MonoBehaviour
             else
             {
                 var tempColour = hearts[i].color;
-                tempColour.a = 50f;
+                tempColour.a = 0f;
                 hearts[i].color = tempColour;
             }
         }

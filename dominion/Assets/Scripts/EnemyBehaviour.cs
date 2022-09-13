@@ -10,7 +10,10 @@ public class EnemyBehaviour : MonoBehaviour
     private Vector2 enemyToPlayerNormalised;
     [SerializeField]
     private float enemyFireForce;
+    [SerializeField] 
+    private float enemyCooldown;
     public bool playerInZone = false;
+    bool turretSleeping = false;
     Rigidbody2D body;
     public float enemyWalkSpeed;
     //Animations & states 
@@ -27,6 +30,7 @@ public class EnemyBehaviour : MonoBehaviour
         body = gameObject.GetComponent<Rigidbody2D>();
         weapon = gameObject.GetComponent<Weapon>();
         animator = gameObject.GetComponent<Animator>();
+        gameObject.GetComponent<HealthScript>().invincible = true;
     }
 
     public void MoveEnemy()
@@ -35,7 +39,7 @@ public class EnemyBehaviour : MonoBehaviour
     }
     public void AttackPlayer()
     {
-        StartCoroutine(weapon.Shoot(enemyToPlayerNormalised, 1f, enemyFireForce, gameObject.tag, firePoint, false));
+        StartCoroutine(weapon.Shoot(enemyToPlayerNormalised, enemyCooldown, enemyFireForce, gameObject.tag, firePoint, false));
     }
     //Iterates itself once called until the player is out of range, calls move and attack functions with a delay each iteration
     public IEnumerator PlayerDetected(Vector2 playerPosition, GameObject playerObject, float playerDistanceMag)
@@ -56,9 +60,17 @@ public class EnemyBehaviour : MonoBehaviour
         }
         else
         {
-            ChangeAnimationState(enemySleeping);
-            ChangeAnimationState(enemySleepIdle);
+            if(!turretSleeping)
+            {
+                turretSleeping = true;
+                Debug.Log("going to sleep");
+                ChangeAnimationState(enemySleeping);
+                Debug.Log("sleeping");
+                ChangeAnimationState(enemySleepIdle);
+                turretSleeping = false;
+            }
             playerInZone = false;
+            gameObject.GetComponent<HealthScript>().invincible = true;
             yield break;
         }
     }
@@ -66,6 +78,7 @@ public class EnemyBehaviour : MonoBehaviour
     {
         if (collision.tag == "Player")
         {
+            
             //Debug.Log("enter oog detected");
         
             Vector2 playerPos = collision.transform.position;
@@ -73,11 +86,14 @@ public class EnemyBehaviour : MonoBehaviour
             float playerMag = (playerPos - (Vector2)gameObject.transform.position).magnitude;
             if(!playerInZone && playerMag <=5)
             {
+                gameObject.GetComponent<HealthScript>().invincible = false;
+                Debug.Log("awaking");
                 ChangeAnimationState(enemyAwaking);
+                Debug.Log("awake idling");
                 ChangeAnimationState(enemyAwakeIdle);
+                playerInZone = true;
+                StartCoroutine(PlayerDetected(playerPos, playerObject, playerMag));
             }
-            playerInZone = true;
-            StartCoroutine(PlayerDetected(playerPos, playerObject, playerMag));
         }
     }
 

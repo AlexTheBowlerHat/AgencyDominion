@@ -9,9 +9,18 @@ EditorBuildSettings:
     path: Assets/Scenes/Disclaimer.unity
     guid: bb354e6e87dac984590a4d7afbfa8b72
   - enabled: 1
-    path: Assets/Scenes/StartMenu.unity
+    path: Assets/Scenes/Start Menu/StartMenu.unity
     guid: aea5e314647a7774c8066d18c9f2d752
   - enabled: 1
     path: Assets/Scenes/TestLevel.unity
     guid: 2cda990e2423bbf4892e6590ba056729
+  - enabled: 1
+    path: Assets/Scenes/Start Menu/HelpScene.unity
+    guid: 8b999ea8c07fd3446b3eb4c0c8611c18
+  - enabled: 1
+    path: Assets/Scenes/Start Menu/OptionsScene.unity
+    guid: 858c2dcbd9a1db84abe591f37f5750e9
+  - enabled: 1
+    path: Assets/Scenes/Start Menu/CreditsScene.unity
+    guid: 88217f56eba43ac44b7e26a4c5665259
   m_configObjects: {}
