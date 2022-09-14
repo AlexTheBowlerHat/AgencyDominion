@@ -41,15 +41,26 @@ public class PlayerControl : MonoBehaviour
     public Vector3[] weaponPositions = {new Vector3(-0.5f,0,0),new Vector3(0.5f,0,0)};
     public bool holdAccessibility = false;
 
+    //Variables for animation
+    Animate animateScript;
+    const string playerWalkDown =  "playerWalkDown";
+    const string playerWalkUp =  "playerWalkUp";
+    const string playerWalkLeft =  "playerWalkLeft";
+    const string playerWalkRight =  "playerWalkRight";
+    const string playerWalkUpLeft =  "playerWalkUpLeft";
+    const string playerWalkUpRight =  "playerWalkUpRight";
+    const string playerWalkDownLeft =  "playerWalkDownLeft";
+    const string playerWalkDownRight =  "playerWalkDownRight";
     void Start()
     {
         //Sets up the camera and gets a reference
         mainCam = Camera.main;
         mainCam.enabled = true;
         handleTransform = transform.GetChild(0);
-        gameObject.GetComponent<PolygonCollider2D>();
+        playersPolygonCollider = gameObject.GetComponent<PolygonCollider2D>();
         weapon = weaponTransform.GetComponent<Weapon>();
         weaponSpriter = weaponTransform.GetComponent<SpriteRenderer>();
+        animateScript = gameObject.GetComponent<Animate>();
     }
 
     //FixedUpdate is called every 0.02s
@@ -174,48 +185,56 @@ public class PlayerControl : MonoBehaviour
             case float _ when 67.5f < threeSixtyLookAngle && threeSixtyLookAngle < 112.5f:
                 //Debug.Log("NORTH");
                 selectedSprites = northSprites;
+                animateScript.ChangeAnimationState(playerWalkUp);
                 break;
 
             //SOUTH 
             case float _ when 292.5f > threeSixtyLookAngle && threeSixtyLookAngle > 247.5f:
                 //Debug.Log("SOUTH");
                 selectedSprites = southSprites;
+                animateScript.ChangeAnimationState(playerWalkDown);
                 break;
 
             //WEST 
             case float _ when 157.5f < threeSixtyLookAngle && threeSixtyLookAngle < 202.5f: 
                 //Debug.Log("WEST");
                 selectedSprites = westSprites;
+                animateScript.ChangeAnimationState(playerWalkLeft);
                 break;
 
             //EAST 
             case float _ when 22.5f > threeSixtyLookAngle || threeSixtyLookAngle > 337.5f:
                 //Debug.Log("EAST");
                 selectedSprites = eastSprites;
+                animateScript.ChangeAnimationState(playerWalkRight);
                 break;
 
             //NORTH WEST 
             case float _ when 112.5f < threeSixtyLookAngle && threeSixtyLookAngle < 157.5f:
                 //Debug.Log("NORTH WEST");
                 selectedSprites = northWestSprites;
+                animateScript.ChangeAnimationState(playerWalkUpLeft);
                 break;
 
             //NORTH EAST
             case float _ when 22.5f < threeSixtyLookAngle && threeSixtyLookAngle < 67.5f:
                 //Debug.Log("NORTH EAST");
                 selectedSprites = northEastSprites;
+                animateScript.ChangeAnimationState(playerWalkUpRight);
                 break;
 
             //SOUTH WEST
             case float _ when 202.5f < threeSixtyLookAngle && threeSixtyLookAngle < 247.5f:
                 //Debug.Log("SOUTH WEST");
                 selectedSprites = southWestSprites;
+                animateScript.ChangeAnimationState(playerWalkDownLeft);
                 break;
 
             //SOUTH EAST 
             case float _ when 292.5f < threeSixtyLookAngle && threeSixtyLookAngle < 337.5f:
                 //Debug.Log("SOUTH EAST");
                 selectedSprites = southEastSprites;
+                animateScript.ChangeAnimationState(playerWalkDownRight);
                 break;
 
             default:

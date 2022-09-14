@@ -3,12 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UIElements;
 using UnityEngine.SceneManagement;
-using SMC = StartMenuControls;
 
 public class HelpSceneControls : MonoBehaviour
 {
     Button exitButton;
-    public StartMenuControls startMenuControls;
     // Start is called before the first frame update
     void Start()
     {

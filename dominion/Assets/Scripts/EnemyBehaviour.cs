@@ -17,8 +17,7 @@ public class EnemyBehaviour : MonoBehaviour
     Rigidbody2D body;
     public float enemyWalkSpeed;
     //Animations & states 
-    Animator animator;
-    string currentAnimState;
+    Animate animateScript;
     const string enemySleepIdle =  "EnemySleepIdle";
     const string enemyAwakeIdle =  "EnemyAwakeIdle";
     const string enemyAwaking =  "EnemyAwakeToSleep";
@@ -29,14 +28,15 @@ public class EnemyBehaviour : MonoBehaviour
     {
         body = gameObject.GetComponent<Rigidbody2D>();
         weapon = gameObject.GetComponent<Weapon>();
-        animator = gameObject.GetComponent<Animator>();
         gameObject.GetComponent<HealthScript>().invincible = true;
+        animateScript = gameObject.GetComponent<Animate>();  
     }
-
+    //Moves enemy to player
     public void MoveEnemy()
     {
         body.velocity = enemyToPlayerNormalised * enemyWalkSpeed * Time.fixedDeltaTime; //Velocity method
     }
+    //Fires projectile towards player
     public void AttackPlayer()
     {
         StartCoroutine(weapon.Shoot(enemyToPlayerNormalised, enemyCooldown, enemyFireForce, gameObject.tag, firePoint, false));
@@ -47,6 +47,7 @@ public class EnemyBehaviour : MonoBehaviour
         if (playerDistanceMag<=5)
         {
             //Debug.Log(playerDistanceMag);
+            //Variable setting for calculations
             playerPosition = playerObject.transform.position;
             enemyToPlayer = playerPosition - (Vector2)gameObject.transform.position;
             playerDistanceMag = enemyToPlayer.magnitude;
@@ -61,14 +62,16 @@ public class EnemyBehaviour : MonoBehaviour
         else
         {
             if(!turretSleeping)
-            {
+            {   
+                //Plays sleeping animations
                 turretSleeping = true;
-                Debug.Log("going to sleep");
-                ChangeAnimationState(enemySleeping);
-                Debug.Log("sleeping");
-                ChangeAnimationState(enemySleepIdle);
+                //Debug.Log("going to sleep");
+                animateScript.ChangeAnimationState(enemySleeping);
+                //Debug.Log("sleeping");
+                animateScript.ChangeAnimationState(enemySleepIdle);
                 turretSleeping = false;
             }
+            //Makes turret invincible when sleeping/out of range
             playerInZone = false;
             gameObject.GetComponent<HealthScript>().invincible = true;
             yield break;
@@ -78,33 +81,24 @@ public class EnemyBehaviour : MonoBehaviour
     {
         if (collision.tag == "Player")
         {
-            
             //Debug.Log("enter oog detected");
-        
+
             Vector2 playerPos = collision.transform.position;
             GameObject playerObject = collision.gameObject;
             float playerMag = (playerPos - (Vector2)gameObject.transform.position).magnitude;
+            //Checks if player is in trigger range 
             if(!playerInZone && playerMag <=5)
             {
                 gameObject.GetComponent<HealthScript>().invincible = false;
-                Debug.Log("awaking");
-                ChangeAnimationState(enemyAwaking);
-                Debug.Log("awake idling");
-                ChangeAnimationState(enemyAwakeIdle);
+                //Debug.Log("awaking");
+                animateScript.ChangeAnimationState(enemyAwaking);
+                //Debug.Log("awake idling");
+                animateScript.ChangeAnimationState(enemyAwakeIdle);
                 playerInZone = true;
                 StartCoroutine(PlayerDetected(playerPos, playerObject, playerMag));
             }
         }
     }
 
-// Derived from Dani Krossing's method
-    void ChangeAnimationState(string newState)
-    {
-        //Stops interrupting itself
-        if (currentAnimState == newState) return;
-        //Plays aniamtion
-        animator.Play(newState);
-        //Updates state
 
-    }
 }

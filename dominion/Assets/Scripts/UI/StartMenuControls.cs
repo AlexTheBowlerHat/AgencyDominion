@@ -11,6 +11,7 @@ public class StartMenuControls : MonoBehaviour
     Button optionsButton;
     Button creditsButton;
     Button quitButton;
+    bool allowClick = false;
     // Start is called before the first frame update
     void Start()
     {
@@ -27,16 +28,31 @@ public class StartMenuControls : MonoBehaviour
         optionsButton.RegisterCallback<ClickEvent>(ev => SwitchScene("OptionsScene"));
         creditsButton.RegisterCallback<ClickEvent>(ev => SwitchScene("CreditsScene"));
         quitButton.RegisterCallback<ClickEvent> (ev => QuitButtonPressed());
+        
+        StartCoroutine(Waiter());
+    }
+
+    IEnumerator Waiter()
+    {
+        yield return new WaitForSeconds(0.2f);
+        allowClick = true;
     }
 
     public void SwitchScene(string sceneName)
     {
-        SceneManager.LoadScene(sceneName);
+        if(allowClick)
+        {
+            SceneManager.LoadScene(sceneName);
+        }
     }
 
     void QuitButtonPressed()
     {
+        if(allowClick)
+        {
         Application.Quit();
         Debug.Log("Quit");
+        }
+        
     }
 }
