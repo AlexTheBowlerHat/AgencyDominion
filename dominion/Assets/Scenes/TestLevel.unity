@@ -1803,11 +1803,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spriteRenderer: {fileID: 1209825411}
   body: {fileID: 1209825410}
-  weapon: {fileID: 1429142230}
-  weaponTransform: {fileID: 1429142228}
-  weaponSpriter: {fileID: 0}
   playersPolygonCollider: {fileID: 1209825415}
-  firePoint: {fileID: 446487646}
   northSprites:
   - {fileID: -2442548626146251763, guid: 46e918b8a9b7eba43bff6252828e7a88, type: 3}
   northEastSprites:
@@ -1830,13 +1826,19 @@ MonoBehaviour:
   lookAngle: 0
   threeSixtyLookAngle: 0
   lookDirectionUnnormalized: {x: 0, y: 0}
+  weapon: {fileID: 1429142230}
+  weaponTransform: {fileID: 1429142228}
+  weaponSpriter: {fileID: 0}
+  firePoint: {fileID: 446487646}
   mousePos: {x: 0, y: 0}
   mainCam: {fileID: 519420031}
   handleTransform: {fileID: 446487646}
+  holdAccessibility: 0
+  playerCooldown: 0.2
+  playerFireForce: 5
   weaponPositions:
   - {x: -0.5, y: 0, z: 0}
   - {x: 0.5, y: 0, z: 0}
-  holdAccessibility: 0
 --- !u!50 &1209825410
 Rigidbody2D:
   serializedVersion: 4
@@ -2110,7 +2112,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   parentedTag: Player
-  startingHealth: 999
+  startingHealth: 3
   invincible: 0
   healthPoints: 0
 --- !u!58 &1209825417

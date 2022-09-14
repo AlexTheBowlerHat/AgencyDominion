@@ -20,16 +20,16 @@
                     "id": "2df9dea4-2c16-4687-8958-7cfc8bec95d4",
                     "expectedControlType": "Button",
                     "processors": "",
-                    "interactions": "",
+                    "interactions": "Tap,Hold",
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Mouse",
-                    "type": "Value",
+                    "name": "Hold",
+                    "type": "Button",
                     "id": "ff197451-c00a-4dfe-a053-764b403e4ce7",
-                    "expectedControlType": "Vector2",
+                    "expectedControlType": "Button",
                     "processors": "",
-                    "interactions": "",
+                    "interactions": "Hold(duration=0.4,pressPoint=1)",
                     "initialStateCheck": true
                 },
                 {
@@ -112,11 +112,11 @@
                 {
                     "name": "",
                     "id": "c23a102b-0fcf-4815-bab8-878838ddf3d6",
-                    "path": "<Mouse>/position",
+                    "path": "<Mouse>/leftButton",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Mouse",
+                    "action": "Hold",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },

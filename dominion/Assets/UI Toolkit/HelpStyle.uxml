@@ -3,9 +3,9 @@
     <ui:VisualElement name="BG" class="Background-Aligner">
         <ui:VisualElement name="Left" />
         <ui:VisualElement name="Middle">
-            <ui:VisualElement class="default-container default-block" style="top: 10%;">
-                <ui:Label text="&lt;u&gt;Controls" display-tooltip-when-elided="true" name="Controls" class="label-default title-label-small-default" />
-                <ui:Label text="W - Move Up&#10;A - Move Left&#10;S - Move Down&#10;D - Move Right&#10;&#10;Left Mouse Button - Fire Weapon" display-tooltip-when-elided="true" name="PlayerControls" class="label-default smaller-label-default" />
+            <ui:VisualElement class="default-container default-block" style="top: 10%; width: 100%;">
+                <ui:Label text="&lt;u&gt;Controls" display-tooltip-when-elided="true" name="Controls" class="label-default title-label-small-default" style="height: 10%; padding-bottom: 40px; top: 0;" />
+                <ui:Label text="W - Move Up&#10;A - Move Left&#10;S - Move Down&#10;D - Move Right&#10;&#10;Click/Hold Left Mouse Button - Fire Weapon" display-tooltip-when-elided="true" name="PlayerControls" class="label-default smaller-label-default" style="white-space: normal; margin-right: 10px; margin-left: 10px;" />
                 <ui:Label text="&lt;u&gt;Objective&lt;/u&gt;" display-tooltip-when-elided="true" name="Objective" class="label-default smaller-label-default title-label-small-default" style="height: 50px; width: 100%; padding-top: 0;" />
                 <ui:Label text="Eliminate threats before they eliminate you.&#10;&#10;Escape." display-tooltip-when-elided="true" name="Whattodo" class="smaller-label-default label-default" style="height: 20%; width: 100%; white-space: normal; padding-bottom: 10px; margin-top: 10px;" />
                 <ui:Button text="Exit To Main Menu" display-tooltip-when-elided="true" name="Exit" class="button-default exit-button-default" />

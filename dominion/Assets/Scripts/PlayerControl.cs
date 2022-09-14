@@ -2,19 +2,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
-
+using UnityEngine.InputSystem.Interactions;
 
 public class PlayerControl : MonoBehaviour
 {
+    [Header ("==General Variables==")]
     public SpriteRenderer spriteRenderer;
     public Rigidbody2D body;
-    public Weapon weapon;
-    public Transform weaponTransform;
-    public SpriteRenderer weaponSpriter;
     public PolygonCollider2D playersPolygonCollider;
-    public Transform firePoint;
+    [Space (5)]
 
     //Sprite lists, doesn't include west due to use of spriterender.flipx
+    [Header ("==Sprite Lists==")]
     public List<Sprite> northSprites;
     public List<Sprite> northEastSprites;
     public List<Sprite> northWestSprites;
@@ -23,25 +22,43 @@ public class PlayerControl : MonoBehaviour
     public List<Sprite> southSprites;
     public List<Sprite> southEastSprites;
     public List<Sprite> southWestSprites;
+    [Space (5)]
 
     //Variables for movement
+    [Header ("==Movement Variables==")]
     public float walkSpeed;
     [SerializeField] Vector2 direction;
+    [Space (5)]
 
     //Variables for look direction
+    [Header ("==Mouse Info Variables==")]
     [SerializeField] Vector2 lookDirection;
     [SerializeField] float lookAngle;
     [SerializeField] float threeSixtyLookAngle;
     [SerializeField] Vector2 lookDirectionUnnormalized;
+    [Space (5)]
 
     //Variables for shooting
+    [Header ("==Shooting Variables==")]
+    public Weapon weapon;
+    public Transform weaponTransform;
+    public SpriteRenderer weaponSpriter;
+    public Transform firePoint;
     public Vector2 mousePos;
     public Camera mainCam;
     public Transform handleTransform;
-    public Vector3[] weaponPositions = {new Vector3(-0.5f,0,0),new Vector3(0.5f,0,0)};
     public bool holdAccessibility = false;
+    bool stopHoldFire = false;
+    [SerializeField] float playerCooldown;
+    [SerializeField] float playerFireForce;
+    //IEnumerator coroutineRef;
+    public Vector3[] weaponPositions = {new Vector3(-0.5f,0,0),new Vector3(0.5f,0,0)};
+
+
+    [Space (5)]
 
     //Variables for animation
+    [Header ("==Animation Variables==")]
     Animate animateScript;
     const string playerWalkDown =  "playerWalkDown";
     const string playerWalkUp =  "playerWalkUp";
@@ -61,6 +78,7 @@ public class PlayerControl : MonoBehaviour
         weapon = weaponTransform.GetComponent<Weapon>();
         weaponSpriter = weaponTransform.GetComponent<SpriteRenderer>();
         animateScript = gameObject.GetComponent<Animate>();
+        //coroutineRef = HoldFire(STOP);
     }
 
     //FixedUpdate is called every 0.02s
@@ -121,8 +139,34 @@ public class PlayerControl : MonoBehaviour
     //Invoked on F press, starts a coroutine to shoot
     public void Fire(InputAction.CallbackContext context)
     {
-        StartCoroutine(weapon.Shoot(RetreiveMouseInfo(), 0.2f, 5f, gameObject.tag, firePoint, holdAccessibility));
+        //Debug.Log("Fire called, canceled is: " + context.canceled + " , interatction is: " + context.interaction);
+        if (context.performed && context.interaction is TapInteraction)
+        {
+            StartCoroutine(weapon.Shoot(RetreiveMouseInfo(), playerCooldown, playerFireForce, gameObject.tag, firePoint, holdAccessibility));
+        }
+        else if (context.performed && context.interaction is HoldInteraction)
+        {
+            StartCoroutine(HoldFire(stopHoldFire));
+        }
+        else if (context.canceled && context.interaction is HoldInteraction)
+        {
+            //Debug.Log("got to stop");
+            stopHoldFire = true;
+            //StopCoroutine(HoldFire(STOP));
+        }
     }
+    IEnumerator HoldFire(bool stop)
+    {
+        if(!stop)
+        {
+        StartCoroutine(weapon.Shoot(RetreiveMouseInfo(), playerCooldown, playerFireForce, gameObject.tag, firePoint, holdAccessibility));
+        yield return new WaitForSeconds(0.05f);
+        StartCoroutine(HoldFire(stopHoldFire));
+        }
+        else yield break;     
+        stopHoldFire = false;
+    }
+
     void FlipWeapon()
     {
         switch (lookDirection.x)
