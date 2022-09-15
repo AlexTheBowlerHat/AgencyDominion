@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UIElements;
 using UnityEngine.SceneManagement;
 
-public class HelpSceneControls : MonoBehaviour
+public class BackToMain : MonoBehaviour
 {
     Button exitButton;
     // Start is called before the first frame update

@@ -7,28 +7,40 @@ public class HealthUI : MonoBehaviour
 {
     //Derived from Speed Tutor's script
     [SerializeField] private Image[] hearts;
-    float healthPoints;
+    float _healthPoints;
+    public Sprite fullheart;
+    public Sprite greyHeart;
     
     void Start()
     {
-       healthPoints = gameObject.GetComponent<HealthScript>().healthPoints;
-       UpdateHearts();
+       _healthPoints = gameObject.GetComponent<HealthScript>().healthPoints;
+       UpdateHearts(_healthPoints);
     }
-    public void UpdateHearts()
+    public void UpdateHearts(float healthPoints)
     {
+        _healthPoints = healthPoints;
+        Debug.Log("update hearts called");
         for (int i = 0; i < hearts.Length; i++)
         {
-            if (i < healthPoints)
+            if (i < _healthPoints)
             {   
+                Debug.Log("got to making colour, i: " + i);
+                hearts[i].sprite = fullheart;
+                /*
                 var tempColour = hearts[i].color;
                 tempColour.a = 100f;
                 hearts[i].color = tempColour;
+                */
             }
             else
             {
+                Debug.Log("got to unmaking colour, i:" + i);
+                hearts[i].sprite = greyHeart;
+                /*
                 var tempColour = hearts[i].color;
                 tempColour.a = 0f;
                 hearts[i].color = tempColour;
+                */
             }
         }
     }

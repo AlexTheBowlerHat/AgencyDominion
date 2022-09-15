@@ -52,7 +52,7 @@ public class PlayerControl : MonoBehaviour
     [SerializeField] float playerCooldown;
     [SerializeField] float playerFireForce;
     //IEnumerator coroutineRef;
-    public Vector3[] weaponPositions = {new Vector3(-0.5f,0,0),new Vector3(0.5f,0,0)};
+    public Vector3[] weaponPositions = {new Vector3(-0.45f,-0.5f,0),new Vector3(0.45f,-0.25f,0)};
 
 
     [Space (5)]

@@ -9,6 +9,7 @@ public class HealthScript : MonoBehaviour
     [SerializeField]
     private float startingHealth; //Health to begin
     private float maxHealth;
+    [SerializeField] private HealthUI healthUI;
 
     private string objectTagToString;
     public bool invincible = false;
@@ -29,6 +30,7 @@ public class HealthScript : MonoBehaviour
         {
             //Debug.Log("Player calling");
             animateScript.DamageAnimation("playerBlink");
+            healthUI.UpdateHearts(healthPoints);
         }
         else if (objectTagToString == "Enemy")
         {
