@@ -7,25 +7,25 @@ public class HealthScript : MonoBehaviour
 {
     public string parentedTag;
     [SerializeField]
-    private float startingHealth; //Health to begin
+    private float startingHealth; 
     private float maxHealth;
+    public float healthPoints;
     [SerializeField] private HealthUI healthUI;
-
     private string objectTagToString;
     public bool invincible = false;
-  
-    public float healthPoints;
     Animate animateScript;
+    //Called whenever a health change is needed
     public void UpdateHealth(float change)
     {
-        //Debug.Log(invincible);
+        //Changes health
         healthPoints -= change;
-        healthPoints = Mathf.Clamp(healthPoints, 0f, maxHealth); //Sets value and makes sure its between 0 and max health
+        healthPoints = Mathf.Clamp(healthPoints, 0f, maxHealth); //Makes sure health is in the correct range
 
         //Debug.Log("got here updating health");
         if (animateScript == null) return;
         //Debug.Log("made it past null check");
 
+        //Animations
         if (objectTagToString == "Player")
         {
             //Debug.Log("Player calling");
@@ -37,13 +37,14 @@ public class HealthScript : MonoBehaviour
             animateScript.DamageAnimation("EnemyBlink");
         }
 
+        //Death check
         if (healthPoints <= 0f)
         {
-            //Debug.Log(healthPoints);
-            Eliminate(); //Kill Method, differs between player and enemy
+            Eliminate();
         }
 
     }
+
     // Start is called before the first frame update
     void Start()
     {
@@ -54,9 +55,10 @@ public class HealthScript : MonoBehaviour
         animateScript = gameObject.GetComponent<Animate>();
         objectTagToString = parentedTag.ToString();
     }
+    //Destroys or reloads scene depending on object being killed
     public void Eliminate()
     {
-        Debug.Log("Bye: " + objectTagToString);
+        //Debug.Log("Bye: " + objectTagToString);
         if (objectTagToString == "Enemy")
         {
             Destroy(gameObject);

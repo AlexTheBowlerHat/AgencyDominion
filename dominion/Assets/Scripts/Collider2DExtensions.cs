@@ -12,25 +12,25 @@ public static class Collider2DExtensions
         collider.UpdateShapeToSprite(collider.GetComponent<SpriteRenderer>().sprite);
     }
 
+    //Updates attached physics shape to the sprite's one
     public static void UpdateShapeToSprite (this PolygonCollider2D collider, Sprite sprite) 
     {
-        // Checks both have values/valid
         if (collider != null && sprite != null) 
         {
-            //Get number of physics shapes
+            //Gets number of physics shape points from sprite
             collider.pathCount = sprite.GetPhysicsShapeCount();
             
             // New list to store all the points of the sprite
             List<Vector2> path = new List<Vector2>();
 
-            // Loops through path count
+            // Loops through all points
             for (int i = 0; i < collider.pathCount; i++) 
             {
                 // Clears path storage
                 path.Clear();
                 // Gets shape
                 sprite.GetPhysicsShape(i, path);
-                // Changes colliders path number to one in storage
+                // Changes collider point
                 collider.SetPath(i, path.ToArray());
             }
         }

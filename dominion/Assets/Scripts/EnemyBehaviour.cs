@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class EnemyBehaviour : MonoBehaviour
 {
+    [Header ("Enemy Attack Variables")]
+    //Attacking variables
     public Weapon weapon;
     public Transform firePoint;
     private Vector2 enemyToPlayer;
@@ -14,16 +16,20 @@ public class EnemyBehaviour : MonoBehaviour
     private float enemyCooldown;
     public bool playerInZone = false;
     bool turretSleeping = false;
+
+    //Movement variables
+    [Header ("Movement Variables")]
     Rigidbody2D body;
     public float enemyWalkSpeed;
+    
     //Animations & states 
+    [Header ("Animation Variables")]
     Animate animateScript;
     const string enemySleepIdle =  "EnemySleepIdle";
     const string enemyAwakeIdle =  "EnemyAwakeIdle";
     const string enemyAwaking =  "EnemyAwakeToSleep";
     const string enemySleeping =  "EnemySleepToAwake";
     
-
     private void Start()
     {
         body = gameObject.GetComponent<Rigidbody2D>();
@@ -31,22 +37,27 @@ public class EnemyBehaviour : MonoBehaviour
         gameObject.GetComponent<HealthScript>().invincible = true;
         animateScript = gameObject.GetComponent<Animate>();  
     }
+
     //Moves enemy to player
     public void MoveEnemy()
     {
         body.velocity = enemyToPlayerNormalised * enemyWalkSpeed * Time.fixedDeltaTime; //Velocity method
     }
+
     //Fires projectile towards player
     public void AttackPlayer()
     {
         StartCoroutine(weapon.Shoot(enemyToPlayerNormalised, enemyCooldown, enemyFireForce, gameObject.tag, firePoint, false));
     }
-    //Iterates itself once called until the player is out of range, calls move and attack functions with a delay each iteration
+    
+    //Detects if player is still in range, moves and attacks toward player
     public IEnumerator PlayerDetected(Vector2 playerPosition, GameObject playerObject, float playerDistanceMag)
     {
+        //Iterates itself once called until the player is out of range
         if (playerDistanceMag<=5)
         {
             //Debug.Log(playerDistanceMag);
+
             //Variable setting for calculations
             playerPosition = playerObject.transform.position;
             enemyToPlayer = playerPosition - (Vector2)gameObject.transform.position;
@@ -55,15 +66,15 @@ public class EnemyBehaviour : MonoBehaviour
 
             MoveEnemy();
             AttackPlayer();
-            //Debug.Log("Got to here!");
+            //Prevents Unity Hanging
             yield return new WaitForSeconds(0.1f);
             StartCoroutine(PlayerDetected(playerPosition, playerObject, playerDistanceMag));
         }
         else
         {
+            //Once out of range, turret sleeps, and becomes invincible
             if(!turretSleeping)
             {   
-                //Plays sleeping animations
                 turretSleeping = true;
                 //Debug.Log("going to sleep");
                 animateScript.ChangeAnimationState(enemySleeping);
@@ -77,16 +88,18 @@ public class EnemyBehaviour : MonoBehaviour
             yield break;
         }
     }
+
+    //Called when object enters trigger rigidbody
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.tag == "Player")
         {
-            //Debug.Log("enter oog detected");
-
+            //Variables for calculating
             Vector2 playerPos = collision.transform.position;
             GameObject playerObject = collision.gameObject;
             float playerMag = (playerPos - (Vector2)gameObject.transform.position).magnitude;
-            //Checks if player is in trigger range 
+
+            //If the player is in range, wake the turret and let it be hit
             if(!playerInZone && playerMag <=5)
             {
                 gameObject.GetComponent<HealthScript>().invincible = false;

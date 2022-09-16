@@ -4,7 +4,7 @@
         <ui:VisualElement name="Left" style="justify-content: space-around;" />
         <ui:VisualElement name="Middle" style="align-items: center;">
             <ui:Label text="Dominion" display-tooltip-when-elided="true" name="Title" class="label-default" />
-            <ui:VisualElement name="ButtonsContainer" class="default-container default-block">
+            <ui:VisualElement name="ButtonsContainer" class="default-container default-block" style="width: 200%; height: 80%;">
                 <ui:Button text="Play" display-tooltip-when-elided="true" name="PlayButton" class="button-default" />
                 <ui:Button text="Help" display-tooltip-when-elided="true" name="HelpButton" class="button-default" />
                 <ui:Button text="Options" display-tooltip-when-elided="true" name="OptionsButton" class="button-default" />

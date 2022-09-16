@@ -15,6 +15,7 @@ public class StartMenuControls : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        //References to all the buttons
         var rootElement = GetComponent<UIDocument>().rootVisualElement;
 
         playButton = rootElement.Q<Button>("PlayButton");
@@ -23,12 +24,14 @@ public class StartMenuControls : MonoBehaviour
         creditsButton = rootElement.Q<Button>("CreditsButton");
         quitButton = rootElement.Q<Button>("QuitButton");
 
+        //Binds buttons to methods relevent to their function
         playButton.RegisterCallback<ClickEvent>(ev => SwitchScene("TestLevel"));
         helpButton.RegisterCallback<ClickEvent>(ev => SwitchScene("HelpScene"));
         optionsButton.RegisterCallback<ClickEvent>(ev => SwitchScene("OptionsScene"));
         creditsButton.RegisterCallback<ClickEvent>(ev => SwitchScene("CreditsScene"));
         quitButton.RegisterCallback<ClickEvent> (ev => QuitButtonPressed());
         
+        //Here to stop users accidentally clicking buttons after switching scenes
         StartCoroutine(Waiter());
     }
 
@@ -51,7 +54,7 @@ public class StartMenuControls : MonoBehaviour
         if(allowClick)
         {
         Application.Quit();
-        Debug.Log("Quit");
+        //Debug.Log("Quit");
         }
         
     }

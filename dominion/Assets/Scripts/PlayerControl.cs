@@ -68,9 +68,9 @@ public class PlayerControl : MonoBehaviour
     const string playerWalkUpRight =  "playerWalkUpRight";
     const string playerWalkDownLeft =  "playerWalkDownLeft";
     const string playerWalkDownRight =  "playerWalkDownRight";
+    //Gets references
     void Start()
     {
-        //Sets up the camera and gets a reference
         mainCam = Camera.main;
         mainCam.enabled = true;
         handleTransform = transform.GetChild(0);
@@ -111,7 +111,7 @@ public class PlayerControl : MonoBehaviour
     }
 
     //Shooting Methods============================================================
-    //Gets key information for shooting and wepaon direction
+    //Gets key information for shooting and weapon direction
     public Vector2 RetreiveMouseInfo()
     {
         //Takes mouse position from the camera 
@@ -124,7 +124,7 @@ public class PlayerControl : MonoBehaviour
         //Returns float that is an angle between x axis and the look direction of the player
         lookAngle = Mathf.Atan2(lookDirectionUnnormalized.y, lookDirectionUnnormalized.x) * Mathf.Rad2Deg;
 
-        //Converts the atan look angle which has negatives into 360 degrees, Taken from Stackoverflow User Liam George Betsworth
+        //Converts the atan look angle which has negatives into 360 degrees for clarity, Taken from Stackoverflow User Liam George Betsworth
         threeSixtyLookAngle = (lookAngle + 360) % 360; 
 
         //Sets the weapon depending on the look angle
@@ -136,7 +136,7 @@ public class PlayerControl : MonoBehaviour
         //Debug.Log(threeSixtyLookAngle);
         return lookDirection;
     }
-    //Invoked on F press, starts a coroutine to shoot
+    //Invoked on bind for firing, differentiates between tapping and holding to fire projectiles
     public void Fire(InputAction.CallbackContext context)
     {
         //Debug.Log("Fire called, canceled is: " + context.canceled + " , interatction is: " + context.interaction);
@@ -155,6 +155,7 @@ public class PlayerControl : MonoBehaviour
             //StopCoroutine(HoldFire(STOP));
         }
     }
+    //Iterator for constantly firing projectiles on hold, stops when released
     IEnumerator HoldFire(bool stop)
     {
         if(!stop)
@@ -167,6 +168,7 @@ public class PlayerControl : MonoBehaviour
         stopHoldFire = false;
     }
 
+    //Flips weapon spot relevant to player depending on where mouse is aiming
     void FlipWeapon()
     {
         switch (lookDirection.x)
@@ -200,14 +202,15 @@ public class PlayerControl : MonoBehaviour
         }
     }
 
-    //Sets the sprite of the player to whichever direction they're 'looking' in
+    //Updates physics shape when sprite changes
     void SetSprite()
     {
         List<Sprite> directionSpritesChosen = SelectSpriteList();
 
-        if (directionSpritesChosen != null) //Chooses sprite to show if there are no sprites
+        if (directionSpritesChosen != null) 
         {
             spriteRenderer.sprite = directionSpritesChosen[0];
+            //Calls the method to update the physics shape to the sprite after it has been changed
             Collider2DExtensions.TryUpdateShapeToAttachedSprite(playersPolygonCollider);
         }
         else

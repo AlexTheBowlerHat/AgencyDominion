@@ -3,7 +3,7 @@
     <ui:VisualElement name="BG" class="Background-Aligner">
         <ui:VisualElement name="Left" />
         <ui:VisualElement name="Middle">
-            <ui:VisualElement class="default-container default-block" style="top: 10%; width: 100%;">
+            <ui:VisualElement class="default-container default-block" style="top: 10%; width: 100%; height: 80%;">
                 <ui:Label text="&lt;u&gt;Default Controls" display-tooltip-when-elided="true" name="Controls" class="label-default title-label-small-default" style="height: 10%; padding-bottom: 40px; top: 0;" />
                 <ui:Label text="W - Move Up&#10;A - Move Left&#10;S - Move Down&#10;D - Move Right&#10;&#10;Click/Hold Left Mouse Button - Fire Weapon" display-tooltip-when-elided="true" name="PlayerControls" class="label-default smaller-label-default" style="white-space: normal; margin-right: 10px; margin-left: 10px;" />
                 <ui:Label text="&lt;u&gt;Objective&lt;/u&gt;" display-tooltip-when-elided="true" name="Objective" class="label-default smaller-label-default title-label-small-default" style="height: 50px; width: 100%; padding-top: 0;" />

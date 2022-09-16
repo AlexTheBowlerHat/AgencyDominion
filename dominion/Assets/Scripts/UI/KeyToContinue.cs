@@ -13,7 +13,9 @@ public class KeyToContinue : MonoBehaviour
        currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
        nextScene = SceneManager.GetSceneByBuildIndex(1);
     }
-    // Update is called once per frame
+
+    //Checks if any button has been pressed each frame, not costly as only used for a disclaimer scene seen briefly
+    //Then loads the start menu when input detected
     void Update()
     {
         if (Keyboard.current.anyKey.isPressed || Mouse.current.leftButton.isPressed || Mouse.current.middleButton.isPressed || Mouse.current.rightButton.isPressed && currentSceneIndex == 0)
@@ -22,7 +24,7 @@ public class KeyToContinue : MonoBehaviour
             SetNextScene();
         }
     }
-    
+    //Unloads disclaimer
     private static IEnumerator SetNextScene()
     {
         while (!SceneManager.GetSceneByName("StartMenu").isLoaded)
